@@ -1,0 +1,13 @@
+@import "../pages/Home/Home.css";
+
+:root {
+    --veryDarkBlue: #01101F;
+    --darkBlue: #0F232E;
+    --blue: #3F9798;
+    --almostWhite: #FBFBFB;
+    --orange: #EA8A4D;
+    --golden:#E2D397;
+    --success: #A8DC6D;
+    --fail: #AF261B;
+};
+

@@ -3,7 +3,6 @@ import { NavLink } from "react-router-dom";
 import { withUser } from "../components/Auth/withUser";
 import apiHandler from "../api/apiHandler";
 
-import "../styles/NavMain.css";
 
 const NavMain = (props) => {
   const { context } = props;
@@ -29,7 +28,7 @@ const NavMain = (props) => {
           <React.Fragment>
             <li>
               <NavLink to="/profile">
-                {context.user && context.user.email}
+                {context.user && context.user.alias}
               </NavLink>
             </li>
             <li>

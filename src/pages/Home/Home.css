@@ -1,0 +1,7 @@
+body {
+    background: linear-gradient(var(--darkBlue), var(--veryDarkBlue));
+    color: var(--almostWhite);
+    width: 100vw;
+    min-height: 100vh;
+    }
+
