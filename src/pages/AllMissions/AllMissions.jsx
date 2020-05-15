@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import "./AllMissions.css";
 import apiHandler from "../../api/apiHandler";
+// import { GoogleMap, withScriptjs, withGoogleMap } from "react-google-maps";
+import WrappedMap from "../../components/WrappedMap";
 
 export class AllMissions extends Component {
   constructor(props) {
@@ -10,7 +12,6 @@ export class AllMissions extends Component {
       selectedMissions: [],
       filter: { alignment: null, category: null, recommended_rank: null },
     };
-    // this.handleChangeAlignment = this.handleChangeAlignment.bind(this);
   }
 
   componentDidMount() {
@@ -61,13 +62,14 @@ export class AllMissions extends Component {
       }
       return true;
     });
-    console.log(Object.entries(this.state.filter));
-    console.log(this.state);
+
+    console.log(filteredArray);
 
     return (
       <React.Fragment>
-        <h1>All missions</h1>
-        <section id="missions-list">
+        <h1 id="missions-list">All missions</h1>
+        <section className="missions-list">
+          <a href="#map">See on the map</a>
           <div className="filter-bar">
             <div>
               <p>Alignment</p>
@@ -101,16 +103,6 @@ export class AllMissions extends Component {
                 <option value="6">6</option>
               </select>
             </div>
-            {/* <div>
-              <p>Reward</p>
-              <select name="reward" onChange={this.handleSelect}>
-                <option value="All">All</option>
-                <option value="500">Min 500₡</option>
-                <option value="1000">Min 1000₡</option>
-                <option value="5000">Min 5000₡</option>
-                <option value="10000">Min 10000₡</option>
-              </select>
-            </div> */}
           </div>
           {filteredArray.map((mission, index) => (
             <article key={index} className="one-mission-card">
@@ -123,7 +115,16 @@ export class AllMissions extends Component {
             </article>
           ))}
         </section>
-        <section id="map" className="map-part"></section>
+        <section id="map" className="map-part">
+          <a href="#missions-list">Go back to the missions list</a>
+          <WrappedMap
+            googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=${process.env.REACT_APP_GOOGLE_KEY}`}
+            loadingElement={<div style={{ height: "100%" }} />}
+            containerElement={<div style={{ height: "100%" }} />}
+            mapElement={<div style={{ height: "100%" }} />}
+            events={filteredArray}
+          />
+        </section>
       </React.Fragment>
     );
   }

@@ -5,3 +5,19 @@
 .one-mission-card img {
     max-width: 100%;
 }
+
+.missions-list {
+    width: 100vw;
+    height: 100vh;
+}
+
+.missions-list a,
+#map a {
+    text-decoration: none;
+    color: var(--almostWhite);
+}
+
+#map {
+    width: 100vw;
+    height: 100vh;
+}
