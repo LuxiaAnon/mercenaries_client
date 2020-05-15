@@ -1,11 +1,17 @@
 import React from "react";
+import HomeNotConnected from "./HomeNotConnected";
+import HomeConnected from "./HomeConnected";
+import { withUser } from "../../components/Auth/withUser";
+import "./Home.css";
 
 const Home = (props) => {
+  const { context } = props;
   return (
     <div>
-      <h1>Mercenaries</h1>
+      {!context.isLoggedIn && <HomeNotConnected />}
+      {context.isLoggedIn && <HomeConnected />}
     </div>
   );
 };
 
-export default Home;
+export default withUser(Home);

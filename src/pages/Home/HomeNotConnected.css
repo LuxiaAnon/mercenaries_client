@@ -1,0 +1,21 @@
+#home-page h1 {
+    text-align: center;
+
+}
+
+.home-page-img {
+    height: 20vh;
+    width: 20vh;
+    border-radius: 50%;
+}
+
+.home-catchy-phrase-container {
+    background-image: url("/media/images/apo.jpg");
+    background-position: center;
+    height: 40vh;
+    text-align: center;
+}
+
+.home-benefits {
+    display: flex;
+}

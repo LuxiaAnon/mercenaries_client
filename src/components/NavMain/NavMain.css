@@ -1,0 +1,4 @@
+.NavMain a {
+    text-decoration: none;
+    color: var(--almostWhite);
+}

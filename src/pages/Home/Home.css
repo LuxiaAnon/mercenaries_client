@@ -1,7 +1,15 @@
 body {
-    background: linear-gradient(var(--darkBlue), var(--veryDarkBlue));
-    color: var(--almostWhite);
-    width: 100vw;
-    min-height: 100vh;
-    }
+   background: linear-gradient(var(--darkBlue), var(--veryDarkBlue));
+   color: var(--almostWhite);
+   width: 100vw;
+   min-height: 100vh;
+   font-family: 'Cairo',
+      sans-serif;
+}
 
+body h1,
+h2,
+h3 {
+   font-family: 'Days One',
+      sans-serif;
+}

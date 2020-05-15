@@ -1,22 +1,12 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
-import UserContext from "../Auth/UserContext";
-import apiHandler from "../../api/apiHandler";
+import UserContext from "../../Auth/UserContext";
+import apiHandler from "../../../api/apiHandler";
 
 class FormSignup extends Component {
   static contextType = UserContext;
 
   state = {
-    // email: "",
-    // password: "",
-    // avatar: "",
-    // alias: "",
-    // catch_phrase: "",
-    // favorite_weapon: "",
-    // experience: "",
-    // rank: "",
-    // honor: "",
-    // cash: "",
     tmpAvatar: "media/images/mercenary_default.jpg",
     skills: {
       pistols: 0,
@@ -213,7 +203,10 @@ class FormSignup extends Component {
             </div>
             <div>
               <p>Spaceship</p>
-              {this.haveDrivingLicence("spaceship", "media/images/spaceship.jpg")}
+              {this.haveDrivingLicence(
+                "spaceship",
+                "media/images/spaceship.jpg"
+              )}
             </div>
           </div>
         </section>

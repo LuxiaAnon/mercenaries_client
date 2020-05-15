@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 
-import UserContext from "../Auth/UserContext";
+import UserContext from "../../Auth/UserContext";
 import { withRouter } from "react-router-dom";
-import apiHandler from "../../api/apiHandler";
+import apiHandler from "../../../api/apiHandler";
 
 class FormSignin extends Component {
   static contextType = UserContext;
