@@ -59,6 +59,7 @@ const NavMain = (props) => {
                 <div className="mercenary-card-info">
                   <p className="mercenary-name">{context.user.alias}</p>
                   <p>Rank: {context.user.rank}</p>
+                  <p>Honor: {context.user.honor}</p>
                   <p>Bank: {context.user.cash}</p>
                 </div>
                 <NavLink to="/dashboard">

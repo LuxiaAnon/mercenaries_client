@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import apiHandler from "../../api/apiHandler";
 import "./AllTrainings.css";
 import WrappedMap from "../../components/WrappedMap";
@@ -18,7 +19,6 @@ export class AllTrainings extends Component {
       .getAllTrainings()
       .then((apiRes) => {
         this.setState({ selectedTrainings: apiRes, allTrainings: apiRes });
-        console.log(apiRes);
       })
       .catch((err) => {
         console.log(err);
@@ -49,14 +49,16 @@ export class AllTrainings extends Component {
       }
       return true;
     });
-    console.log(this.state);
-    console.log(filteredArray);
+    // console.log(this.state);
+    // console.log(filteredArray);
 
     return (
       <React.Fragment>
-        <h1 id="missions-list">All trainings</h1>
-        <section className="trainings-list">
-          <a href="#trainings-map">See on the map</a>
+        <h1 id="trainings-list">ALL TRAININGS</h1>
+        <div className="header-all-trainings">
+          <a className="links-trainings-pages" href="#trainings-map">
+            See on the map
+          </a>
           <div className="filter-bar">
             <div>
               <p>Category</p>
@@ -69,7 +71,7 @@ export class AllTrainings extends Component {
               </select>
             </div>
             <div>
-              <p>required_level</p>
+              <p>Required level</p>
               <select name="required_level" onChange={this.handleSelect}>
                 <option value="All">All</option>
                 <option value="0">Novice</option>
@@ -79,19 +81,27 @@ export class AllTrainings extends Component {
               </select>
             </div>
           </div>
-          {filteredArray.map((training, index) => (
-            <article key={index} className="one-training-card">
-              <figure>
-                <img src={training.image} alt={training.name} />
-              </figure>
-              <h4>{training.name}</h4>
-              <span>{training.category}</span>
-              <span>{training.price}₡</span>
-            </article>
-          ))}
+        </div>
+        <section className="trainings-list">
+          <div className="all-trainings-cards">
+            {filteredArray.map((training, index) => (
+              <article key={index} className="one-training-card">
+                <figure>
+                  <Link to={`/training-details/${training._id}`}>
+                    <img src={training.image} alt={training.name} />
+                  </Link>
+                </figure>
+                <h4>{training.name}</h4>
+                <span>{training.category}</span>
+                <span className="right orange">{training.price}₡</span>
+              </article>
+            ))}
+          </div>
         </section>
-        <section id="map" className="map-part">
-          <a href="#trainings-list">Go back to the missions list</a>
+        <section id="map-trainings" className="map-part">
+          <a className="links-trainings-pages" href="#trainings-list">
+            Go back to the missions list
+          </a>
           <WrappedMap
             googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=${process.env.REACT_APP_GOOGLE_KEY}`}
             loadingElement={<div style={{ height: "100%" }} />}

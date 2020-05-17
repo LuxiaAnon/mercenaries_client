@@ -5,27 +5,21 @@ import { Link } from "react-router-dom";
 const HomeConnected = (props) => {
   return (
     <React.Fragment>
-      <h1 className="choice-title">Working or training?</h1>
-      <div>
-        {/* <Link to="/all-missions">Missions</Link>
-        <Link to="/all-trainings">Training</Link> */}
-        {/* <Link to="/all-missions">Missions</Link>
-        <Link to="/all-trainings">Training</Link> */}
-      </div>
-      <div className="round-menu">
-        <Link to="/all-missions">Missions</Link>
-        <Link to="/all-trainings">Training</Link>
-      </div>
-      <div>
-        {/* <Link to="/all-missions">Missions</Link>
-        <Link to="/all-trainings">Training</Link> */}
-        {/* <Link to="/all-missions">Missions</Link>
-        <Link to="/all-trainings">Training</Link> */}
-      </div>
+      <h1 className="choice-title">What's next?</h1>
+      <section className="working-or-training">
+        <div className="working">
+          <div className="container-link">
+            <Link to="/all-missions">Missions</Link>
+          </div>
+        </div>
+        <div className="training">
+          <div className="container-link">
+            <Link to="/all-trainings">Trainings</Link>
+          </div>
+        </div>
+      </section>
     </React.Fragment>
   );
 };
-
-//mets les catégories en cachées et fais les apparaître lorsque tu cliques dessus ! :D
 
 export default HomeConnected;

@@ -1,12 +1,14 @@
-import React from "react";
 import { withUser } from "../../components/Auth/withUser";
+import React, { Component } from "react";
 
-const Dashboard = (props) => {
-  return (
-    <div>
-      <h1> {props.context.user.alias}</h1>
-    </div>
-  );
-};
+export class Dashboard extends Component {
+  render() {
+    return (
+      <div>
+        <h1> {this.props.context.user.alias}</h1>
+      </div>
+    );
+  }
+}
 
 export default withUser(Dashboard);

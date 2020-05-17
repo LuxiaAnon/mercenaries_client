@@ -65,11 +65,25 @@ export default {
       .catch(errorHandler)
   },
 
+  getOneTraining(id) {
+    return service
+      .get("/api/trainings/" + id)
+      .then((res) => res.data)
+      .catch(errorHandler)
+  },
+
   updateAMission(idMission, data) {
     return service
       .patch("/api/missions/edit/" + idMission, data)
       .then((res) => res.data)
       .catch(errorHandler)
+  },
+  updateATraining(idTraining, data) {
+    return service
+      .patch("/api/trainings/edit/" + idTraining, data)
+      .then((res) => res.data)
+      .catch(errorHandler)
   }
+
 
 };

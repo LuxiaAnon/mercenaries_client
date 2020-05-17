@@ -1,26 +1,131 @@
-.trainings-list {
-    width: 100vw;
-    height: 100vh;
-    overflow: scroll;
+#trainings-list {
+    text-align: center;
+    font-size: 2em;
+    padding-top: 3vh;
+    padding-bottom: 3vh;
+}
+
+/* .go-map {
+    text-decoration: none;
+    color: var(--blue);
+    font-weight: bold;
+    font-size: 1.2em;
+    display: inline-block;
+    margin: 2vh auto;
+} */
+
+.links-trainings-pages {
+    text-decoration: none;
+    color: var(--blue);
+    font-weight: bold;
+    font-size: 1.2em;
+    display: inline-block;
+    margin: 2vh auto;
 }
 
 
-.trainings-list a,
-#map a {
-    text-decoration: none;
-    color: var(--almostWhite);
+
+.header-all-trainings {
+    margin-left: 4%;
+}
+
+.filter-bar div {
+    display: flex;
+    margin-right: 2%;
+    margin-bottom: 2vh;
+}
+
+
+
+.filter-bar select {
+    border: none;
+    display: block;
+    width: 100px;
+}
+
+
+.filter-bar p {
+    margin-right: 1%;
+}
+
+.trainings-list {
+    width: calc(100% - 20px);
+    /* height: 100vh; */
+    overflow-y: scroll;
+    padding: 2%;
+}
+
+
+
+.all-trainings-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 300px));
+    grid-gap: 3vh;
+    margin: 2vh auto;
 }
 
 .one-training-card {
-    width: 20vw;
+    height: 28vh;
+    margin-bottom: 3vh;
+}
+
+.one-training-card h4 {
+    margin: 1vh;
+    font-family: "Days one";
+    color: var(--orange);
+    text-align: center;
+}
+
+.one-training-card span {
+    font-weight: 400;
+}
+
+.one-training-card span {
+    font-weight: 400;
+}
+
+.right {
+    float: right;
+}
+
+.orange {
+    color: var(--orange);
+}
+
+.image-container {
+    height: 80%;
 }
 
 .one-training-card img {
-    max-width: 100%;
+    width: 100%;
+    height: 100%;
+    border: 10px solid var(--golden);
+    border-radius: 10px;
 }
 
 
-#map {
+#map-trainings {
     width: 100vw;
     height: 100vh;
+}
+
+@media(min-width:900px) {
+    .all-trainings-cards {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-gap: 3vh;
+        margin: 2vh 2vw;
+    }
+
+    #trainings-list {
+        text-align: center;
+        font-size: 4em;
+        padding-top: 3vh;
+        padding-bottom: 3vh;
+    }
+
+    .filter-bar {
+        display: flex;
+    }
+
 }

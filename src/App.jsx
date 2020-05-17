@@ -10,6 +10,7 @@ import AllMissions from "./pages/AllMissions/AllMissions";
 import AllTrainings from "./pages/AllTrainings/AllTrainings";
 import "./styles/app.css";
 import OneMission from "./pages/OneMission/OneMission";
+import OneTraining from "./pages/OneTraining/OneTraining";
 
 function App() {
   return (
@@ -24,6 +25,11 @@ function App() {
           exact
           path="/mission-details/:id"
           component={OneMission}
+        />
+        <ProtectedRoute
+          exact
+          path="/training-details/:id"
+          component={OneTraining}
         />
         <ProtectedRoute exact path="/all-trainings" component={AllTrainings} />
         <ProtectedRoute exact path="/dashboard" component={Dashboard} />

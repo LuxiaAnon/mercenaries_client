@@ -1,34 +1,89 @@
-.round-menu {
-    position: absolute;
-    background: radial-gradient(circle at center, var(--veryDarkBlue) 0, var(--darkBlue)70%, var(--blue)100%);
-    top: 55%;
-    left: 50%;
-    right: auto;
-    bottom: auto;
-    transform: translate(-50%, -50%);
-    width: 30vw;
-    height: 30vw;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: space-around
-}
-
-.round-menu a {
+.choice-title {
+    width: fit-content;
+    text-align: center;
+    display: block;
+    margin: 0 auto;
     color: var(--almostWhite);
-    text-decoration: none;
-    font-family: 'Days One',
-        sans-serif;
     font-size: 3em;
+    margin-bottom: 5%;
 }
 
-.round-menu a:hover {
+/* .working-or-training {
+    height: 80vh;
+} */
+
+.working,
+.training {
+
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    min-height: 70vh;
+    width: 90%;
+    margin: 2%;
+    border: 15px solid var(--golden);
+    border-radius: 2px;
+    position: relative;
+}
+
+.working {
+    background-image: url("/media/images/work.jpg");
+}
+
+.training {
+    background-image: url("/media/images/training.jpeg");
+}
+
+.container-link {
+    position: absolute;
+    bottom: -10px;
+    padding-top: 10px;
+    left: 25%;
+    background-color: var(--golden);
+    height: 10%;
+    width: 50%;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.container-link a {
+    color: var(--veryDarkBlue);
+    text-decoration: none;
+    font-size: 1.5em;
+    font-family: "Days One";
+}
+
+.container-link a:hover {
     color: var(--blue);
 }
 
-.choice-title {
-    width: fit-content;
-    margin: 0 auto;
-    color: var(--orange);
-    font-size: 3em;
+@media(min-width :1200px) {
+    .working-or-training {
+        display: flex;
+    }
+
+    .choice-title {
+        font-size: 4em;
+        margin-bottom: 1%;
+    }
+
+    .working,
+    .training {
+        width: 45%;
+    }
+
+    .container-link {
+        position: absolute;
+        bottom: -1.7%;
+        padding-top: 10px;
+    }
+
+    .container-link a {
+
+        font-size: 2em;
+
+
+    }
+
+
 }

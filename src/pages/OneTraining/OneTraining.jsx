@@ -1,24 +1,24 @@
 import React, { Component } from "react";
-import "./OneMission.css";
+import "./OneTraining.css";
 import apiHandler from "../../api/apiHandler.js";
 import { withUser } from "../../components/Auth/withUser";
 import WrappedMap from "../../components/WrappedMap";
 
-export class OneMission extends Component {
+export class OneTraining extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      oneMission: null,
-      participants: null,
+      oneTraining: null,
+      trainees: null,
       currentUser: this.props.context.user,
     };
-    this.joinMission = this.joinMission.bind(this);
+    this.joinTraining = this.joinTraining.bind(this);
     this.hundleJoin = this.hundleJoin.bind(this);
   }
 
-  joinMission(id, data) {
+  joinTraining(id, data) {
     apiHandler
-      .updateAMission(id, data)
+      .updateATraining(id, data)
       .then((apiRes) => {
         console.log(apiRes.data);
       })
@@ -26,80 +26,68 @@ export class OneMission extends Component {
   }
 
   hundleJoin() {
-    const missionIid = this.state.oneMission._id;
+    const trainingId = this.state.oneTraining._id;
     const mercenaryId = this.state.currentUser._id;
 
-    this.setState({ participants: this.state.participants.push(mercenaryId) });
+    this.setState({ trainees: this.state.trainees.push(mercenaryId) });
     console.log(this.state);
-    this.joinMission(missionIid, this.state.oneMission);
+    this.joinTraining(trainingId, this.state.oneTraining);
   }
 
   componentDidMount() {
     const id = this.props.match.params.id;
     apiHandler
-      .getOneMission(id)
+      .getOneTraining(id)
       .then((apiRes) => {
         this.setState({
-          oneMission: apiRes,
-          participants: apiRes.participants,
-          // participants: [...apiRes.participants],
+          oneTraining: apiRes,
+          trainees: apiRes.trainees,
+          // trainees: [...apiRes.trainees],
         });
       })
       .catch((err) => {});
   }
 
   render() {
-    if (!this.state.oneMission) return null;
+    if (!this.state.oneTraining) return null;
     return (
       <React.Fragment>
         <section>
-          <figure className="image-mission">
+          <figure className="image-training">
             <img
-              src={this.state.oneMission.image}
-              alt={this.state.oneMission.name}
+              src={this.state.oneTraining.image}
+              alt={this.state.oneTraining.name}
             />
           </figure>
-          <article className="infos-mission">
-            <h2>{this.state.oneMission.name} </h2>
+          <article className="infos-training">
+            <h2>{this.state.oneTraining.name} </h2>
             <div>
               <p>
                 <strong>Category: </strong>
-                {this.state.oneMission.category}
+                {this.state.oneTraining.category}
               </p>
               <p>
-                <strong>Alignment: </strong> {this.state.oneMission.alignment}
+                <strong>Skill learned: </strong>
+                {this.state.oneTraining.skill_learned}
               </p>
               <p>
                 <strong>Recommended rank: </strong>
-                {this.state.oneMission.recommended_rank}
-              </p>
-              <p>
-                <strong>Reward: </strong> {this.state.oneMission.reward}
-              </p>
-              <p>
-                <strong>XP: </strong>
-                {this.state.oneMission.gained_xp}
-              </p>
-              <p>
-                <strong>Honor: </strong> {this.state.oneMission.honor_points}
+                {this.state.oneTraining.recommended_rank}
               </p>
             </div>
-            <p>{this.state.oneMission.details}</p>
-            <p>
-              <strong>Proof of succes: </strong>
-              {this.state.oneMission.proof_of_succes}
-            </p>
+            <p>{this.state.oneTraining.details}</p>
+
             <div className="button-box">
               <button onClick={(e) => this.hundleJoin()}>Go!</button>
             </div>
           </article>
-          <div className="one-mission-map">
+          <div className="one-training-map">
             <WrappedMap
               googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=${process.env.REACT_APP_GOOGLE_KEY}`}
               loadingElement={<div style={{ height: "100%" }} />}
               containerElement={<div style={{ height: "100%" }} />}
               mapElement={<div style={{ height: "100%" }} />}
-              events={[this.state.oneMission]}
+              events={[this.state.oneTraining]}
             />
           </div>
         </section>
@@ -108,4 +96,4 @@ export class OneMission extends Component {
   }
 }
 
-export default withUser(OneMission);
+export default withUser(OneTraining);

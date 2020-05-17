@@ -8,25 +8,31 @@ import {
 } from "react-google-maps";
 
 const WrappedMap = (props) => {
+  console.log(props.events);
   const [selectedEvent, setSelectedEvent] = useState(null);
   return (
     <GoogleMap
       defaultZoom={12}
       defaultCenter={{ lat: 48.856613, lng: 2.352222 }}
     >
-      {props.events.map((event, index) => (
-        <Marker
-          key={index}
-          position={{ lat: event.coordinates[0], lng: event.coordinates[1] }}
-          onClick={() => {
-            setSelectedEvent(event);
-          }}
-          icon={{
-            url: `./media/${event.category}.svg`,
-            scaledSize: new window.google.maps.Size(25, 25),
-          }}
-        />
-      ))}
+      {props.events.map((event, index) => {
+        return (
+          <Marker
+            key={index}
+            position={{
+              lat: event.coordinates[0],
+              lng: event.coordinates[1],
+            }}
+            onClick={() => {
+              setSelectedEvent(event);
+            }}
+            icon={{
+              url: `./media/${event.category}.svg`,
+              scaledSize: new window.google.maps.Size(25, 25),
+            }}
+          />
+        );
+      })}
 
       {selectedEvent && (
         <InfoWindow

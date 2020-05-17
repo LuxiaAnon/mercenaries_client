@@ -63,6 +63,7 @@ export class AllMissions extends Component {
       }
       return true;
     });
+    console.log(filteredArray);
 
     return (
       <React.Fragment>
@@ -75,41 +76,40 @@ export class AllMissions extends Component {
           <div className="filter-bar">
             <div>
               <p>Alignment: </p>
-              <div className="custom-select">
-                <select name="alignment" onChange={this.handleSelect}>
-                  <option value="All">All</option>
-                  <option value="Good">Good</option>
-                  <option value="Neutral">Neutral</option>
-                  <option value="Evil">Evil</option>
-                </select>
-              </div>
+
+              <select name="alignment" onChange={this.handleSelect}>
+                <option value="All">All</option>
+                <option value="Good">Good</option>
+                <option value="Neutral">Neutral</option>
+                <option value="Evil">Evil</option>
+              </select>
             </div>
+
             <div>
               <p>Category: </p>
-              <div className="custom-select">
-                <select name="category" onChange={this.handleSelect}>
-                  <option value="All">All</option>
-                  <option value="Elimination">Elimination</option>
-                  <option value="Escort">Escort</option>
-                  <option value="Rescue">Rescue</option>
-                  <option value="Steal">Steal</option>
-                  <option value="Race">Race</option>
-                </select>
-              </div>
+
+              <select name="category" onChange={this.handleSelect}>
+                <option value="All">All</option>
+                <option value="Elimination">Elimination</option>
+                <option value="Escort">Escort</option>
+                <option value="Rescue">Rescue</option>
+                <option value="Steal">Steal</option>
+                <option value="Race">Race</option>
+              </select>
             </div>
+
             <div>
               <p>Recommend rank: </p>
-              <div className="custom-select">
-                <select name="recommended_rank" onChange={this.handleSelect}>
-                  <option value="All">All</option>
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                  <option value="4">4</option>
-                  <option value="5">5</option>
-                  <option value="6">6</option>
-                </select>
-              </div>
+
+              <select name="recommended_rank" onChange={this.handleSelect}>
+                <option value="All">All</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+              </select>
             </div>
           </div>
         </div>
