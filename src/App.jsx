@@ -9,6 +9,7 @@ import Dashboard from "./pages/Dashboard/Dashboard";
 import AllMissions from "./pages/AllMissions/AllMissions";
 import AllTrainings from "./pages/AllTrainings/AllTrainings";
 import "./styles/app.css";
+import OneMission from "./pages/OneMission/OneMission";
 
 function App() {
   return (
@@ -19,6 +20,11 @@ function App() {
         {/* <Route exact path="/signin" component={Signin} /> */}
         <Route exact path="/signup" component={Signup} />
         <ProtectedRoute exact path="/all-missions" component={AllMissions} />
+        <ProtectedRoute
+          exact
+          path="/mission-details/:id"
+          component={OneMission}
+        />
         <ProtectedRoute exact path="/all-trainings" component={AllTrainings} />
         <ProtectedRoute exact path="/dashboard" component={Dashboard} />
       </Switch>

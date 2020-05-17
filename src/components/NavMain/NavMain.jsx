@@ -39,7 +39,6 @@ const NavMain = (props) => {
       transform: "translate(-50%, -50%)",
     },
   };
-  console.log(context.user);
   return (
     <nav className="NavMain">
       <ul className="nav-list">

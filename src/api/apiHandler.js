@@ -56,6 +56,20 @@ export default {
       .get("/api/trainings")
       .then((res) => res.data)
       .catch(errorHandler)
+  },
+
+  getOneMission(id) {
+    return service
+      .get("/api/missions/" + id)
+      .then((res) => res.data)
+      .catch(errorHandler)
+  },
+
+  updateAMission(idMission, data) {
+    return service
+      .patch("/api/missions/edit/" + idMission, data)
+      .then((res) => res.data)
+      .catch(errorHandler)
   }
 
 };
