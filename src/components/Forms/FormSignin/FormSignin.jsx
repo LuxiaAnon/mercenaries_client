@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-
+import "./FormSignin.css";
 import UserContext from "../../Auth/UserContext";
 import { withRouter } from "react-router-dom";
 import apiHandler from "../../../api/apiHandler";
@@ -33,6 +33,7 @@ class FormSignin extends Component {
       .signin(this.state)
       .then((data) => {
         this.context.setUser(data);
+        this.props.closing();
         this.props.history.push("/");
       })
       .catch((error) => {
@@ -43,12 +44,19 @@ class FormSignin extends Component {
 
   render() {
     return (
-      <form onChange={this.handleChange} onSubmit={this.handleSubmit}>
-        <label htmlFor="email">Email</label>
+      <form
+        className="login-form"
+        onChange={this.handleChange}
+        onSubmit={this.handleSubmit}
+      >
+        <h2>Welcome back</h2>
+        <label htmlFor="email">Email: </label>
         <input type="email" id="email" name="email" />
-        <label htmlFor="password">Password</label>
+        <br />
+        <label htmlFor="password">Password: </label>
         <input type="password" id="password" name="password" />
-        <button>Submit</button>
+        <br />
+        <button>Login</button>
       </form>
     );
   }

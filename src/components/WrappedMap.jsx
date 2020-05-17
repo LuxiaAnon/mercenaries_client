@@ -11,7 +11,7 @@ const WrappedMap = (props) => {
   const [selectedEvent, setSelectedEvent] = useState(null);
   return (
     <GoogleMap
-      defaultZoom={10}
+      defaultZoom={12}
       defaultCenter={{ lat: 48.856613, lng: 2.352222 }}
     >
       {props.events.map((event, index) => (
@@ -23,7 +23,7 @@ const WrappedMap = (props) => {
           }}
           icon={{
             url: `./media/${event.category}.svg`,
-            scaledSize: new window.google.maps.Size(50, 50),
+            scaledSize: new window.google.maps.Size(25, 25),
           }}
         />
       ))}
@@ -39,6 +39,7 @@ const WrappedMap = (props) => {
           }}
         >
           <div style={{ width: "8vw" }}>
+            <img style={{ width: "90%" }} src={selectedEvent.image} alt="" />
             <h2 style={{ color: "black", fontWeight: "bold" }}>
               {selectedEvent.name}
             </h2>

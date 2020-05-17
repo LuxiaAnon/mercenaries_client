@@ -1,11 +1,12 @@
 import React from "react";
+import { withUser } from "../../components/Auth/withUser";
 
 const Dashboard = (props) => {
   return (
     <div>
-      <h1>Protected profile</h1>
+      <h1> {props.context.user.alias}</h1>
     </div>
   );
 };
 
-export default Dashboard;
+export default withUser(Dashboard);

@@ -1,4 +1,49 @@
+.NavMain {
+    width: 100vw;
+}
+
+.NavMain li,
 .NavMain a {
     text-decoration: none;
     color: var(--almostWhite);
+    padding: 10px;
+    cursor: pointer;
+}
+
+.NavMain li {
+    font-size: 1em;
+}
+
+.not-connected {
+    display: flex;
+    justify-content: space-between;
+}
+
+.connected {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.mercernary-card {
+    display: flex;
+    align-items: center;
+    font-size: 0.8em;
+    text-align: right;
+}
+
+.mercernary-card img {
+    height: 70px;
+    border-radius: 5px;
+    border: 1px solid var(--golden);
+
+}
+
+
+.mercenary-name {
+    color: var(--orange);
+    font-family: 'Days One',
+        sans-serif;
+    font-size: 1.2em;
+    margin-bottom: 20px;
 }

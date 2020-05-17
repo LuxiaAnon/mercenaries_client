@@ -2,10 +2,21 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import { withUser } from "../Auth/withUser";
 import apiHandler from "../../api/apiHandler";
+import FormSignin from "../Forms/FormSignin/FormSignin";
 import "./NavMain.css";
+import Modal from "react-modal";
 
 const NavMain = (props) => {
   const { context } = props;
+  const [modalIsOpen, setIsOpen] = React.useState(false);
+
+  function openModal() {
+    setIsOpen(true);
+  }
+
+  function closeModal() {
+    setIsOpen(false);
+  }
 
   function handleLogout() {
     apiHandler
@@ -18,33 +29,71 @@ const NavMain = (props) => {
       });
   }
 
+  const customStyles = {
+    content: {
+      backgroundColor: "var(--darkBlue)",
+      top: "50%",
+      left: "50%",
+      right: "auto",
+      bottom: "auto",
+      transform: "translate(-50%, -50%)",
+    },
+  };
+  console.log(context.user);
   return (
     <nav className="NavMain">
-      <NavLink exact to="/">
-        <h3 className="logo">MERCENARIES</h3>
-      </NavLink>
       <ul className="nav-list">
         {context.isLoggedIn && (
-          <React.Fragment>
+          <div className="connected">
             <li>
-              <NavLink to="/profile">
-                {context.user && context.user.alias}
+              <li>
+                <p onClick={handleLogout}>Logout</p>
+              </li>
+            </li>
+            <li>
+              <NavLink exact to="/">
+                <h3 className="logo">MERCENARIES</h3>
               </NavLink>
             </li>
             <li>
-              <p onClick={handleLogout}>Logout</p>
+              <div className="mercernary-card">
+                <div className="mercenary-card-info">
+                  <p className="mercenary-name">{context.user.alias}</p>
+                  <p>Rank: {context.user.rank}</p>
+                  <p>Bank: {context.user.cash}</p>
+                </div>
+                <NavLink to="/dashboard">
+                  <figure>
+                    <img src={context.user.avatar} alt={context.user.alias} />
+                  </figure>
+                </NavLink>
+              </div>
             </li>
-          </React.Fragment>
+          </div>
         )}
         {!context.isLoggedIn && (
-          <React.Fragment>
-            <li>
-              <NavLink to="/signin">Log in</NavLink>
-            </li>
+          <div className="not-connected">
+            <li onClick={openModal}>Log in</li>
+            <Modal isOpen={modalIsOpen} style={customStyles}>
+              <FormSignin closing={closeModal} />
+              <button
+                style={{
+                  border: "none",
+                  backgroundColor: "var(--almostWhite)",
+                  color: "var(--darkBlue)",
+                  fontFamily: "Cairo,sans-serif",
+                  width: "20%",
+                  borderRadius: "5px",
+                }}
+                onClick={closeModal}
+              >
+                Close
+              </button>
+            </Modal>
             <li>
               <NavLink to="/signup">Create account</NavLink>
             </li>
-          </React.Fragment>
+          </div>
         )}
       </ul>
     </nav>

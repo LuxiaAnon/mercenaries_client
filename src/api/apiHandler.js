@@ -50,4 +50,12 @@ export default {
       .then((res) => res.data)
       .catch(errorHandler);
   },
+
+  getAllTrainings() {
+    return service
+      .get("/api/trainings")
+      .then((res) => res.data)
+      .catch(errorHandler)
+  }
+
 };

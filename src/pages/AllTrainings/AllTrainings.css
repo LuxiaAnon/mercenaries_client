@@ -1,0 +1,25 @@
+.trainings-list {
+    width: 100vw;
+    height: 100vh;
+    overflow: scroll;
+}
+
+.trainings-list a,
+#map a {
+    text-decoration: none;
+    color: var(--almostWhite);
+}
+
+.one-training-card {
+    width: 20vw;
+}
+
+.one-training-card img {
+    max-width: 100%;
+}
+
+
+#map {
+    width: 100vw;
+    height: 100vh;
+}

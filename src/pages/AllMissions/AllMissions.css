@@ -1,3 +1,19 @@
+.right {
+    float: right;
+}
+
+.missions-list {
+    width: calc(100% - 20px);
+    height: 100vh;
+    overflow-y: scroll;
+}
+
+.missions-list a,
+#map a {
+    text-decoration: none;
+    color: var(--almostWhite);
+}
+
 .one-mission-card {
     width: 20vw;
 }
@@ -6,16 +22,6 @@
     max-width: 100%;
 }
 
-.missions-list {
-    width: 100vw;
-    height: 100vh;
-}
-
-.missions-list a,
-#map a {
-    text-decoration: none;
-    color: var(--almostWhite);
-}
 
 #map {
     width: 100vw;

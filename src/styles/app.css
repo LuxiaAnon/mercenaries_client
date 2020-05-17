@@ -1,4 +1,3 @@
-@import "../pages/Home/Home.css";
 @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;600;700;900&family=Days+One&display=swap');
 
 :root {
@@ -7,8 +6,33 @@
     --blue: #3F9798;
     --almostWhite: #FBFBFB;
     --orange: #EA8A4D;
-    --golden:#E2D397;
+    --golden: #E2D397;
     --success: #A8DC6D;
     --fail: #AF261B;
-};
+}
 
+:root body {
+    background: var(--veryDarkBlue);
+    color: var(--almostWhite);
+    width: 100vw;
+    min-height: 100vh;
+    font-family: 'Cairo',
+        sans-serif;
+    font-weight: lighter;
+    overflow-x: hidden;
+}
+
+:root h1,
+:root h2,
+:root h3 {
+    font-family: 'Days One',
+        sans-serif;
+}
+
+:root * {
+    box-sizing: border-box;
+}
+
+* {
+    box-sizing: border-box;
+}

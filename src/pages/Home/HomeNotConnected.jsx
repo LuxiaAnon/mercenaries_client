@@ -4,7 +4,7 @@ import "./HomeNotConnected.css";
 const HomeNotConnected = (props) => {
   return (
     <React.Fragment>
-      <div id="home-page">
+      <div id="home-page-not-connected">
         <h1>MERCENARIES</h1>
         <main>
           <div className="home-catchy-phrase-container">
@@ -15,7 +15,7 @@ const HomeNotConnected = (props) => {
           </div>
           <section className="home-benefits">
             <article>
-              <h3>Missions for all</h3>
+              <h2>Missions for all</h2>
               <figure>
                 <img
                   className="home-page-img"
@@ -31,7 +31,7 @@ const HomeNotConnected = (props) => {
               </p>
             </article>
             <article>
-              <h3>Payment facilities</h3>
+              <h2>Payment facilities</h2>
               <figure>
                 <img
                   className="home-page-img"
@@ -47,7 +47,7 @@ const HomeNotConnected = (props) => {
               </p>
             </article>
             <article>
-              <h3>Biggest agency</h3>
+              <h2>Biggest agency</h2>
               <figure>
                 <img
                   className="home-page-img"
@@ -63,7 +63,7 @@ const HomeNotConnected = (props) => {
               </p>
             </article>
             <article>
-              <h3>All kinds of trainings</h3>
+              <h2>All kinds of trainings</h2>
               <figure>
                 <img
                   className="home-page-img"

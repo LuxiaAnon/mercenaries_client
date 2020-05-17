@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import "./AllMissions.css";
 import apiHandler from "../../api/apiHandler";
-// import { GoogleMap, withScriptjs, withGoogleMap } from "react-google-maps";
 import WrappedMap from "../../components/WrappedMap";
 
 export class AllMissions extends Component {
@@ -63,8 +62,6 @@ export class AllMissions extends Component {
       return true;
     });
 
-    console.log(filteredArray);
-
     return (
       <React.Fragment>
         <h1 id="missions-list">All missions</h1>
@@ -111,7 +108,7 @@ export class AllMissions extends Component {
               </figure>
               <h4>{mission.name}</h4>
               <span>{mission.category}</span>
-              <span>{mission.reward}₡</span>
+              <span className="right">{mission.reward}₡</span>
             </article>
           ))}
         </section>

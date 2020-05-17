@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { withRouter } from "react-router-dom";
 import UserContext from "../../Auth/UserContext";
 import apiHandler from "../../../api/apiHandler";
+import "./FormSignup.css";
 
 class FormSignup extends Component {
   static contextType = UserContext;
@@ -95,9 +96,17 @@ class FormSignup extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
+    const fd = new FormData();
+    if (this.state.avatar) fd.append("avatar", this.state.avatar);
+    fd.append("email", this.state.email);
+    fd.append("alias", this.state.alias);
+    fd.append("password", this.state.password);
+    fd.append("favorite_weapon", this.state.favorite_weapon);
+    fd.append("catch_phrase", this.state.catch_phrase);
+    fd.append("skills", JSON.stringify(this.state.skills));
 
     apiHandler
-      .signup(this.state)
+      .signup(fd)
       .then((data) => {
         this.context.setUser(data);
         this.props.history.push("/");
@@ -110,108 +119,121 @@ class FormSignup extends Component {
   render() {
     console.log(this.state);
     return (
-      <form
-        onChange={this.handleChange}
-        onSubmit={this.handleSubmit}
-        className="signup"
-      >
-        <section className="avatar-part">
-          <figure className="temp-avatar">
-            <img src={this.state.tmpAvatar} alt="" />
-          </figure>
-          <div>
-            <input type="file" id="avatar" name="avatar" />
-          </div>
-        </section>
-        <section className="id-part">
-          <div>
-            <label htmlFor="email">Email: </label>
-            <input type="email" name="email" />
-          </div>
-          <div>
-            <label htmlFor="password">Password: </label>
-            <input type="password" name="password" />
-          </div>
-        </section>
-        <section className="personality-part">
-          <h2>Who are you?</h2>
-          <div>
-            <label htmlFor="alias">Alias: </label>
-            <input type="text" name="alias" />
-          </div>
-          <div>
-            <label htmlFor="favorite_weapon">Favorite weapon: </label>
-            <input type="text" name="favorite_weapon" />
-          </div>
-          <div>
-            <label htmlFor="catch_phrase">Catch phrase: </label>
-            <input type="text" name="catch_phrase" />
-          </div>
-        </section>
-        <section className="skills-part">
-          <h2>How good are you?</h2>
-          <div>
+      <React.Fragment>
+        <div className="signup-title">
+          <h1>MERCENARIES</h1>
+        </div>
+        <form
+          onChange={this.handleChange}
+          onSubmit={this.handleSubmit}
+          className="signup"
+        >
+          <section className="avatar part">
+            <figure className="temp-avatar">
+              <img src={this.state.tmpAvatar} alt="" />
+            </figure>
+            <div>
+              <input type="file" id="avatar" name="avatar" />
+            </div>
+          </section>
+          <section className="id part">
+            <div>
+              <label htmlFor="email">Email: </label>
+              <input type="email" name="email" />
+            </div>
+            <div>
+              <label htmlFor="password">Password: </label>
+              <input type="password" name="password" />
+            </div>
+          </section>
+          <section className="personality part">
+            <h2>Who are you?</h2>
+            <div>
+              <label htmlFor="alias">Alias: </label>
+              <input type="text" name="alias" />
+            </div>
+            <div>
+              <label htmlFor="favorite_weapon">Favorite weapon: </label>
+              <input type="text" name="favorite_weapon" />
+            </div>
+            <div>
+              <label htmlFor="catch_phrase">Catch phrase: </label>
+              <input type="text" name="catch_phrase" />
+            </div>
+          </section>
+          <section className="skills part">
+            <h2>How good are you?</h2>
+
             <h3>Weapons:</h3>
-            <div className="weapons">
-              <label htmlFor="pistols">Pistols </label>
-              {this.skillRating("pistols")}
+
+            <div className="weapons weapons-big-screen">
+              <div className="oneSkill">
+                <label htmlFor="pistols">Pistols </label>
+                {this.skillRating("pistols")}
+              </div>
+              <div className="oneSkill">
+                <label htmlFor="assault_rifles">Assault rifles </label>
+                {this.skillRating("assault_rifles")}
+              </div>
+              <div className="oneSkill">
+                <label htmlFor="sniper_rifles">Sniper rifles </label>
+                {this.skillRating("sniper_rifles")}
+              </div>
+              <div className="oneSkill">
+                <label htmlFor="hammer">Hammer </label>
+                {this.skillRating("hammer")}
+              </div>
             </div>
-            <div>
-              <label htmlFor="assault_rifles">Assault rifles </label>
-              {this.skillRating("assault_rifles")}
+            <div className=" others-big-screen">
+              <div className="healthcare">
+                <h3>Healthcare:</h3>
+                <div className="oneSkill">
+                  <label htmlFor="first_aid">First aid </label>
+                  {this.skillRating("first_aid")}
+                </div>
+                <div className="oneSkill">
+                  <label htmlFor="medic_crafting">Medic crafting </label>
+                  {this.skillRating("medic_crafting")}
+                </div>
+              </div>
+              <div>
+                <h3>Stealth:</h3>
+                <div className="oneSkill">
+                  <label htmlFor="hacking">Hacking </label>
+                  {this.skillRating("hacking")}
+                </div>
+                <div className="oneSkill">
+                  <label htmlFor="thievery">Thievery </label>
+                  {this.skillRating("thievery")}
+                </div>
+              </div>
             </div>
-            <div>
-              <label htmlFor="sniper_rifles">Sniper rifles </label>
-              {this.skillRating("sniper_rifles")}
+          </section>
+          <section>
+            <div className="driving part">
+              <h2>What can you drive?</h2>
+              <div className="licences">
+                <div>
+                  {this.haveDrivingLicence("car", "media/images/car.jpg")}
+                  <p>Car</p>
+                </div>
+                <div>
+                  {this.haveDrivingLicence("mecha", "media/images/mecha.jpg")}
+                  <p>Mecha</p>
+                </div>
+                <div>
+                  {this.haveDrivingLicence(
+                    "spaceship",
+                    "media/images/spaceship.jpg"
+                  )}
+                  <p>Spaceship</p>
+                </div>
+              </div>
             </div>
-            <div>
-              <label htmlFor="hammer">Hammer </label>
-              {this.skillRating("hammer")}
-            </div>
-          </div>
-          <div className="healthcare">
-            <h3>Healthcare:</h3>
-            <div>
-              <label htmlFor="first_aid">First aid </label>
-              {this.skillRating("first_aid")}
-            </div>
-            <div>
-              <label htmlFor="medic_crafting">Medic crafting </label>
-              {this.skillRating("medic_crafting")}
-            </div>
-          </div>
-          <div>
-            <h3>Stealth:</h3>
-            <div>
-              <label htmlFor="hacking">Hacking </label>
-              {this.skillRating("hacking")}
-            </div>
-            <div>
-              <label htmlFor="thievery">Thievery </label>
-              {this.skillRating("thievery")}
-            </div>
-          </div>
-          <div className="driving">
-            <h2>What can you drive?</h2>
-            <div>
-              <p>Car</p>
-              {this.haveDrivingLicence("car", "media/images/car.jpg")}
-            </div>
-            <div>
-              <p>Mecha</p>
-              {this.haveDrivingLicence("mecha", "media/images/mecha.jpg")}
-            </div>
-            <div>
-              <p>Spaceship</p>
-              {this.haveDrivingLicence(
-                "spaceship",
-                "media/images/spaceship.jpg"
-              )}
-            </div>
-          </div>
-        </section>
-        <button>Go!</button>
-      </form>
+          </section>
+          <button>Go!</button>
+        </form>
+      </React.Fragment>
     );
   }
 }
