@@ -42,7 +42,6 @@ export class OneMission extends Component {
         this.setState({
           oneMission: apiRes,
           participants: apiRes.participants,
-          // participants: [...apiRes.participants],
         });
       })
       .catch((err) => {});

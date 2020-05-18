@@ -8,7 +8,6 @@ import {
 } from "react-google-maps";
 
 const WrappedMap = (props) => {
-  console.log(props.events);
   const [selectedEvent, setSelectedEvent] = useState(null);
   return (
     <GoogleMap
@@ -16,6 +15,7 @@ const WrappedMap = (props) => {
       defaultCenter={{ lat: 48.856613, lng: 2.352222 }}
     >
       {props.events.map((event, index) => {
+        console.log(event);
         return (
           <Marker
             key={index}
