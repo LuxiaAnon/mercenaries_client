@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import React, { Component } from "react";
 import apiHandler from "../../api/apiHandler";
 import "./Dashboard.css";
+import Modal from "react-modal";
+import EndingMission from "../../components/EndingMission/EndingMission";
 
 export class Dashboard extends Component {
   constructor(props) {
@@ -15,8 +17,20 @@ export class Dashboard extends Component {
       statPage: true,
       missionsPage: false,
       trainingsPage: false,
+      modalMissionIsOpen: false,
     };
     this.hundleSelect = this.hundleSelect.bind(this);
+    this.openModal = this.openModal.bind(this);
+    this.closeModal = this.closeModal.bind(this);
+  }
+
+  openModal() {
+    this.setState({ modalMissionIsOpen: true });
+    console.log("bonjour je suis openModal");
+  }
+
+  closeModal() {
+    this.setState({ modalMissionIsOpen: false });
   }
 
   skillRating = (name) => {
@@ -129,6 +143,18 @@ export class Dashboard extends Component {
   }
 
   render() {
+    console.log(this.state.modalMissionIsOpen);
+
+    const customStyles = {
+      content: {
+        backgroundColor: "var(--darkBlue)",
+        top: "50%",
+        left: "50%",
+        right: "auto",
+        bottom: "auto",
+        transform: "translate(-50%, -50%)",
+      },
+    };
     const mercernary = this.props.context.user;
     if (this.state.isLoading) return null;
     return (
@@ -245,7 +271,34 @@ export class Dashboard extends Component {
                     <span>{mission.category}</span>
                     <span className="right orange">{mission.reward}₡</span>
 
-                    <button>Sending proof</button>
+                    <button onClick={this.openModal}>Sending proof</button>
+                    {/* <ReactModal
+                      isOpen={this.modalMissionIsOpen}
+                      style={customStyles}
+                    >
+                      <EndingMission />
+                      <button
+                        style={{
+                          border: "none",
+                          backgroundColor: "var(--almostWhite)",
+                          color: "var(--darkBlue)",
+                          fontFamily: "Cairo,sans-serif",
+                          width: "20%",
+                          borderRadius: "5px",
+                        }}
+                        onClick={this.closeModal}
+                      >
+                        Close
+                      </button>
+                    </ReactModal> */}
+                    <Modal
+                      isOpen={this.state.modalMissionIsOpen}
+                      style={customStyles}
+                      overlayClassName="Overlay"
+                    >
+                      <EndingMission />
+                      <button onClick={this.closeModal}>Close Modal</button>
+                    </Modal>
                   </article>
                 ))}
               </div>
