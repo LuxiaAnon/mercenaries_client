@@ -10,7 +10,6 @@ export class OneTraining extends Component {
     this.state = {
       oneTraining: null,
       trainees: null,
-      currentUser: this.props.context.user,
     };
     this.joinTraining = this.joinTraining.bind(this);
     this.hundleJoin = this.hundleJoin.bind(this);
@@ -27,10 +26,9 @@ export class OneTraining extends Component {
 
   hundleJoin() {
     const trainingId = this.state.oneTraining._id;
-    const mercenaryId = this.state.currentUser._id;
-
-    this.setState({ trainees: this.state.trainees.push(mercenaryId) });
-    console.log(this.state);
+    this.setState({
+      trainees: this.state.trainees.push(this.props.context.user._id),
+    });
     this.joinTraining(trainingId, this.state.oneTraining);
   }
 

@@ -9,13 +9,16 @@ import {
 
 const WrappedMap = (props) => {
   const [selectedEvent, setSelectedEvent] = useState(null);
+  if (!props.events[0]) return null;
   return (
     <GoogleMap
       defaultZoom={12}
-      defaultCenter={{ lat: 48.856613, lng: 2.352222 }}
+      defaultCenter={{
+        lat: props.events[0].coordinates[0],
+        lng: props.events[0].coordinates[1],
+      }}
     >
       {props.events.map((event, index) => {
-        console.log(event);
         return (
           <Marker
             key={index}
@@ -27,7 +30,7 @@ const WrappedMap = (props) => {
               setSelectedEvent(event);
             }}
             icon={{
-              url: `./media/${event.category}.svg`,
+              url: `/media/${event.category}.svg`,
               scaledSize: new window.google.maps.Size(25, 25),
             }}
           />

@@ -1,0 +1,73 @@
+.Dashboard {
+    display: flex;
+}
+
+.onDashboard {
+    cursor: initial;
+}
+
+.dashboard-all-pages {
+    background-color: var(--darkBlue);
+    height: 75vh;
+    width: 70vw;
+}
+
+.dashboard-nav {
+    margin-bottom: 2%;
+    display: flex;
+    margin: 0 30vw 0 25vw;
+}
+
+.dashboard-nav button {
+    background-color: rgba(6, 32, 36, 0.5);
+    border: none;
+    height: 5vh;
+    width: 7vw;
+    min-width: fit-content;
+    color: var(--almostWhite);
+    font-family: 'Days One',
+        sans-serif;
+    border-top-right-radius: 15px;
+    border-top-left-radius: 15px;
+    cursor: pointer;
+    margin-right: 1%;
+}
+
+.dashboard-nav button:focus {
+    color: var(--blue);
+    outline: none;
+    background-color: var(--darkBlue);
+}
+
+.dashboard-nav li {
+    margin-bottom: 2%;
+    display: flex;
+    justify-content: center;
+}
+
+.avatar-container {
+    height: 55vh;
+    width: 25vw;
+    text-align: center;
+    position: relative;
+    padding-top: 20px;
+}
+
+.alias-dashboard {
+    position: absolute;
+    font-size: 3em;
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    width: fit-content;
+    top: -7%;
+    color: var(--orange);
+}
+
+.avatar-container img {
+    height: 100%;
+    border: 10px solid var(--darkBlue);
+    border-radius: 10px;
+}

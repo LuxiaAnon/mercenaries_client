@@ -61,13 +61,13 @@
 
 .all-missions-cards {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 300px));
+    grid-template-columns: repeat(auto-fit, minmax(200px, 400px));
     grid-gap: 3vh;
     margin: 2vh auto;
 }
 
 .one-mission-card {
-    height: 28vh;
+    height: 32vh;
     margin-bottom: 3vh;
 }
 
@@ -112,12 +112,12 @@
 }
 
 @media(min-width:900px) {
-    .all-missions-cards {
+    /* .all-missions-cards {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
         grid-gap: 3vh;
         margin: 2vh 2vw;
-    }
+    } */
 
     #missions-list {
         text-align: center;

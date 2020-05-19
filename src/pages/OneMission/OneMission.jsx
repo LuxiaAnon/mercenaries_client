@@ -10,7 +10,6 @@ export class OneMission extends Component {
     this.state = {
       oneMission: null,
       participants: null,
-      currentUser: this.props.context.user,
     };
     this.joinMission = this.joinMission.bind(this);
     this.hundleJoin = this.hundleJoin.bind(this);
@@ -27,7 +26,7 @@ export class OneMission extends Component {
 
   hundleJoin() {
     const missionIid = this.state.oneMission._id;
-    const mercenaryId = this.state.currentUser._id;
+    const mercenaryId = this.props.context.user._id;
 
     this.setState({ participants: this.state.participants.push(mercenaryId) });
     console.log(this.state);
