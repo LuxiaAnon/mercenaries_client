@@ -36,26 +36,27 @@ export class FormUpdateProfile extends Component {
       .getOneUser(this.props.context.user._id)
       .then((apiRes) => {
         console.log(apiRes);
+        const updatedUser = { ...apiRes };
         this.setState({
-          tmpAvatar: apiRes.avatar,
-          alias: apiRes.alias,
-          email: apiRes.email,
-          catch_phrase: apiRes.catch_phrase,
-          favorite_weapon: apiRes.favorite_weapon,
-          password: apiRes.password,
+          tmpAvatar: updatedUser.avatar,
+          alias: updatedUser.alias,
+          email: updatedUser.email,
+          catch_phrase: updatedUser.catch_phrase,
+          favorite_weapon: updatedUser.favorite_weapon,
+          password: updatedUser.password,
           skills: {
             ...this.state.skills,
-            pistols: apiRes.skills.pistols,
-            assault_rifles: apiRes.skills.assault_rifles,
-            sniper_rifles: apiRes.skills.sniper_rifles,
-            hammer: apiRes.skills.hammer,
-            first_aid: apiRes.skills.first_aid,
-            medic_crafting: apiRes.skills.medic_crafting,
-            hacking: apiRes.skills.hacking,
-            thievery: apiRes.skills.thievery,
-            car: apiRes.skills.car,
-            mecha: apiRes.skills.mecha,
-            spaceship: apiRes.skills.spaceship,
+            pistols: updatedUser.skills.pistols,
+            assault_rifles: updatedUser.skills.assault_rifles,
+            sniper_rifles: updatedUser.skills.sniper_rifles,
+            hammer: updatedUser.skills.hammer,
+            first_aid: updatedUser.skills.first_aid,
+            medic_crafting: updatedUser.skills.medic_crafting,
+            hacking: updatedUser.skills.hacking,
+            thievery: updatedUser.skills.thievery,
+            car: updatedUser.skills.car,
+            mecha: updatedUser.skills.mecha,
+            spaceship: updatedUser.skills.spaceship,
           },
           isLoading: false,
         });
@@ -83,18 +84,30 @@ export class FormUpdateProfile extends Component {
   };
 
   handleSkillClick = (e, name) => {
-    console.log("i am clicked");
+    // console.log("i am clicked");
+    // console.log(
+    //   this.state.skills[e.target.getAttribute("id")] +
+    //     " - " +
+    //     Number(e.target.getAttribute("data-lvl"))
+    // );
+
     const value =
       this.state.skills[e.target.getAttribute("id")] ===
       Number(e.target.getAttribute("data-lvl"))
         ? 0
         : Number(e.target.getAttribute("data-lvl"));
-    console.log(value);
-    console.log(e.target.getAttribute("id"));
+
+    // console.log("value : " + value);
+    // console.log(this.state.skills[e.target.getAttribute("id")]);
+    // console.log(e.target.getAttribute("id"));
+    // console.log(Number(e.target.getAttribute("data-lvl")));
     this.setState({
-      ...this.state.skills,
-      [e.target.getAttribute("id")]: value,
+      skills: {
+        ...this.state.skills,
+        [e.target.getAttribute("id")]: value,
+      },
     });
+    // console.log(this.state);
   };
 
   haveDrivingLicence = (name, source) => {
@@ -114,8 +127,10 @@ export class FormUpdateProfile extends Component {
 
   handleDrivingClick = (e, name) => {
     this.setState({
-      ...this.state.skills,
-      [name]: this.state.skills[name],
+      skills: {
+        ...this.state.skills,
+        [name]: !this.state.skills[name],
+      },
     });
   };
 
@@ -131,8 +146,10 @@ export class FormUpdateProfile extends Component {
     } else if (event.target.type === "radio") {
       value = event.target.value === "yes" ? true : false;
       this.setState({
-        ...this.state.skills,
-        [event.target.name]: value,
+        skills: {
+          ...this.state.skills,
+          [event.target.name]: value,
+        },
       });
       return;
     } else {
@@ -141,21 +158,37 @@ export class FormUpdateProfile extends Component {
     this.setState({ [key]: value });
   };
 
+  buildFormData = (formData, data, parentKey) => {
+    if (
+      data &&
+      typeof data === "object" &&
+      !(data instanceof Date) &&
+      !(data instanceof File)
+    ) {
+      Object.keys(data).forEach((key) => {
+        this.buildFormData(
+          formData,
+          data[key],
+          parentKey ? `${parentKey}[${key}]` : key
+        );
+      });
+    } else {
+      const value = data == null ? "" : data;
+      formData.append(parentKey, value);
+    }
+  };
+
   handleSubmit = (event) => {
     event.preventDefault();
     const fd = new FormData();
-    if (this.state.avatar) fd.append("avatar", this.state.avatar);
-    fd.append("email", this.state.email);
-    fd.append("alias", this.state.alias);
-    fd.append("password", this.state.password);
-    fd.append("favorite_weapon", this.state.favorite_weapon);
-    fd.append("catch_phrase", this.state.catch_phrase);
-    fd.append("skills", JSON.stringify(this.state.skills));
+
+    this.buildFormData(fd, this.state);
 
     apiHandler
       .updateAUser(this.props.context.user._id, fd)
       .then((apiRes) => {
         console.log(apiRes);
+        this.props.context.setUser(apiRes);
         this.props.history.push("/");
       })
       .catch((error) => {
@@ -198,7 +231,7 @@ export class FormUpdateProfile extends Component {
               <input
                 type="password"
                 name="password"
-                defaultValue={this.props.context.user.password}
+                // defaultValue={this.props.context.user.password}
               />
             </div>
           </section>
