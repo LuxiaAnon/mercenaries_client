@@ -32,31 +32,38 @@ export class FormUpdateProfile extends Component {
   }
 
   componentDidMount() {
-    let user = this.props.context.user;
-    console.log(user);
-    this.setState({
-      tmpAvatar: user.avatar,
-      alias: user.alias,
-      email: user.email,
-      catch_phrase: user.catch_phrase,
-      favorite_weapon: user.favorite_weapon,
-      password: user.password,
-      skills: {
-        ...this.state.skills,
-        pistols: user.skills.pistols,
-        assault_rifles: user.skills.assault_rifles,
-        sniper_rifles: user.skills.sniper_rifles,
-        hammer: user.skills.hammer,
-        first_aid: user.skills.first_aid,
-        medic_crafting: user.skills.medic_crafting,
-        hacking: user.skills.hacking,
-        thievery: user.skills.thievery,
-        car: user.skills.car,
-        mecha: user.skills.mecha,
-        spaceship: user.skills.spaceship,
-      },
-      isLoading: false,
-    });
+    apiHandler
+      .getOneUser(this.props.context.user._id)
+      .then((apiRes) => {
+        console.log(apiRes);
+        this.setState({
+          tmpAvatar: apiRes.avatar,
+          alias: apiRes.alias,
+          email: apiRes.email,
+          catch_phrase: apiRes.catch_phrase,
+          favorite_weapon: apiRes.favorite_weapon,
+          password: apiRes.password,
+          skills: {
+            ...this.state.skills,
+            pistols: apiRes.skills.pistols,
+            assault_rifles: apiRes.skills.assault_rifles,
+            sniper_rifles: apiRes.skills.sniper_rifles,
+            hammer: apiRes.skills.hammer,
+            first_aid: apiRes.skills.first_aid,
+            medic_crafting: apiRes.skills.medic_crafting,
+            hacking: apiRes.skills.hacking,
+            thievery: apiRes.skills.thievery,
+            car: apiRes.skills.car,
+            mecha: apiRes.skills.mecha,
+            spaceship: apiRes.skills.spaceship,
+          },
+          isLoading: false,
+        });
+        console.log(this.state);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   skillRating = (name) => {
@@ -76,16 +83,17 @@ export class FormUpdateProfile extends Component {
   };
 
   handleSkillClick = (e, name) => {
+    console.log("i am clicked");
     const value =
       this.state.skills[e.target.getAttribute("id")] ===
       Number(e.target.getAttribute("data-lvl"))
         ? 0
         : Number(e.target.getAttribute("data-lvl"));
+    console.log(value);
+    console.log(e.target.getAttribute("id"));
     this.setState({
-      skills: {
-        ...this.state.skills,
-        [e.target.getAttribute("id")]: value,
-      },
+      ...this.state.skills,
+      [e.target.getAttribute("id")]: value,
     });
   };
 
@@ -106,7 +114,8 @@ export class FormUpdateProfile extends Component {
 
   handleDrivingClick = (e, name) => {
     this.setState({
-      skills: { ...this.state.skills, [name]: !this.state.skills[name] },
+      ...this.state.skills,
+      [name]: this.state.skills[name],
     });
   };
 
@@ -122,13 +131,13 @@ export class FormUpdateProfile extends Component {
     } else if (event.target.type === "radio") {
       value = event.target.value === "yes" ? true : false;
       this.setState({
-        skills: { ...this.state.skills, [event.target.name]: value },
+        ...this.state.skills,
+        [event.target.name]: value,
       });
       return;
     } else {
       value = event.target.value;
     }
-
     this.setState({ [key]: value });
   };
 

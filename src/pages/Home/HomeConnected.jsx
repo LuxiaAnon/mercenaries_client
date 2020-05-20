@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 const HomeConnected = (props) => {
   return (
     <React.Fragment>
-      <h1 className="choice-title">What's next?</h1>
+      <h1 className="choice-title">WHAT'S NEXT?</h1>
       <section className="working-or-training">
         <div className="working">
           <div className="container-link">

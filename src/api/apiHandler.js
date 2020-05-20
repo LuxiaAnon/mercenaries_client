@@ -65,6 +65,14 @@ export default {
       .catch(errorHandler)
   },
 
+  getOneUser(id) {
+    return service
+      .get("/api/users/" + id)
+      .then((res) => res.data)
+      .catch(errorHandler)
+  },
+
+
   getOneTraining(id) {
     return service
       .get("/api/trainings/" + id)
