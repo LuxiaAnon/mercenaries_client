@@ -78,6 +78,21 @@ export default {
       .then((res) => res.data)
       .catch(errorHandler)
   },
+
+  updateAUser(idUser, data) {
+    return service
+      .patch("/api/users/edit/" + idUser, data)
+      .then((res) => res.data)
+      .catch(errorHandler)
+  },
+
+  updateUserCash(idUser, data) {
+    return service
+      .patch("api/users/add-cash/" + idUser, data)
+      .then((res) => res.data)
+      .catch(errorHandler)
+  },
+
   updateATraining(idTraining, data) {
     return service
       .patch("/api/trainings/edit/" + idTraining, data)
