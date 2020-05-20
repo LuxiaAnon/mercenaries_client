@@ -16,10 +16,30 @@ export class AllMissions extends Component {
   }
 
   componentDidMount() {
+    let grenier = {};
     apiHandler
       .getAllMissions()
       .then((apiRes) => {
-        this.setState({ selectedMissions: apiRes, allMissions: apiRes });
+        grenier.allMissions = apiRes.filter((mission) => {
+          if (
+            mission.available &&
+            !mission.previous_participants.includes(this.props.context.user._id)
+          ) {
+            return true;
+          }
+          return false;
+        });
+        grenier.selectedMissions = apiRes.filter((mission) => {
+          if (
+            mission.available &&
+            !mission.previous_participants.includes(this.props.context.user._id)
+          ) {
+            return true;
+          }
+          return false;
+        });
+        this.setState(grenier);
+        // this.setState({ selectedMissions: apiRes, allMissions: apiRes });
       })
       .catch((apiErr) => {
         console.log(apiErr);

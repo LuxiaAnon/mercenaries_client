@@ -2,7 +2,6 @@ import React from "react";
 import { Switch, Route } from "react-router-dom";
 import NavMain from "./components/NavMain/NavMain";
 import Home from "./pages/Home/Home";
-// import Signin from "./components/Signin";
 import Signup from "./pages/Signup/Signup";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Dashboard from "./pages/Dashboard/Dashboard";
@@ -11,6 +10,7 @@ import AllTrainings from "./pages/AllTrainings/AllTrainings";
 import "./styles/app.css";
 import OneMission from "./pages/OneMission/OneMission";
 import OneTraining from "./pages/OneTraining/OneTraining";
+import UpdateProfile from "./pages/UpdateProfile/UpdateProfile";
 
 function App() {
   return (
@@ -33,6 +33,11 @@ function App() {
         />
         <ProtectedRoute exact path="/all-trainings" component={AllTrainings} />
         <ProtectedRoute exact path="/dashboard" component={Dashboard} />
+        <ProtectedRoute
+          exact
+          path="/update-my-profile"
+          component={UpdateProfile}
+        />
       </Switch>
     </div>
   );

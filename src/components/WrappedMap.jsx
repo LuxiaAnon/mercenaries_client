@@ -12,7 +12,7 @@ const WrappedMap = (props) => {
   if (!props.events[0]) return null;
   return (
     <GoogleMap
-      defaultZoom={12}
+      defaultZoom={11}
       defaultCenter={{
         lat: props.events[0].coordinates[0],
         lng: props.events[0].coordinates[1],

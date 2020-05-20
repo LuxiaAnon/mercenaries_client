@@ -17,20 +17,30 @@ export class Dashboard extends Component {
       statPage: true,
       missionsPage: false,
       trainingsPage: false,
-      modalMissionIsOpen: false,
+      modalMissionIsOpen: null,
     };
     this.hundleSelect = this.hundleSelect.bind(this);
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
+    // this.forceUpdateHandler = this.forceUpdateHandler.bind(this);
+    this.refreshPage = this.refreshPage.bind(this);
   }
+  // forceUpdateHandler() {
+  //   console.log("yo");
+  //   this.forceUpdate();
+  // }
 
-  openModal() {
-    this.setState({ modalMissionIsOpen: true });
+  refreshPage() {
+    window.location.reload();
+  }
+  openModal(index) {
+    this.setState({ modalMissionIsOpen: index });
     console.log("bonjour je suis openModal");
   }
 
   closeModal() {
-    this.setState({ modalMissionIsOpen: false });
+    this.setState({ modalMissionIsOpen: null });
+    // this.forceUpdateHandler();
   }
 
   skillRating = (name) => {
@@ -97,7 +107,12 @@ export class Dashboard extends Component {
         grenier.activeMissions = apiRes.filter((mission) => {
           if (
             mission.participants &&
-            mission.participants.includes(this.props.context.user._id)
+            mission.participants.includes(this.props.context.user._id) &&
+            !mission.previous_participants.includes(
+              this.props.context.user._id
+            ) &&
+            mission.available &&
+            mission.winner !== this.props.context.user._id
           ) {
             return true;
           }
@@ -143,8 +158,6 @@ export class Dashboard extends Component {
   }
 
   render() {
-    console.log(this.state.modalMissionIsOpen);
-
     const customStyles = {
       content: {
         backgroundColor: "var(--darkBlue)",
@@ -178,6 +191,10 @@ export class Dashboard extends Component {
                 {mercernary.alias.toUpperCase()}
               </h2>
               <img src={mercernary.avatar} alt="" />
+              <p>Rank: {mercernary.rank}</p>
+              <p>Honor: {mercernary.honor}</p>
+              <p>Bank: {mercernary.cash}₡</p>
+              {/* <p>Rank: {mercernary.rank}</p> */}
             </figure>
           </aside>
 
@@ -255,7 +272,9 @@ export class Dashboard extends Component {
                   </div>
                 </section>
               </div>
-              <button>Update my profile</button>
+              <Link to="/update-my-profile">
+                <button>Update my profile</button>
+              </Link>
             </section>
           )}
           {this.state.missionsPage && (
@@ -271,33 +290,25 @@ export class Dashboard extends Component {
                     <span>{mission.category}</span>
                     <span className="right orange">{mission.reward}₡</span>
 
-                    <button onClick={this.openModal}>Sending proof</button>
-                    {/* <ReactModal
-                      isOpen={this.modalMissionIsOpen}
-                      style={customStyles}
-                    >
-                      <EndingMission />
-                      <button
-                        style={{
-                          border: "none",
-                          backgroundColor: "var(--almostWhite)",
-                          color: "var(--darkBlue)",
-                          fontFamily: "Cairo,sans-serif",
-                          width: "20%",
-                          borderRadius: "5px",
-                        }}
-                        onClick={this.closeModal}
-                      >
-                        Close
-                      </button>
-                    </ReactModal> */}
+                    <button onClick={() => this.openModal(index)}>
+                      Sending proof
+                    </button>
                     <Modal
-                      isOpen={this.state.modalMissionIsOpen}
+                      isOpen={this.state.modalMissionIsOpen === index}
                       style={customStyles}
                       overlayClassName="Overlay"
                     >
-                      <EndingMission />
-                      <button onClick={this.closeModal}>Close Modal</button>
+                      <EndingMission
+                        mission={mission}
+                        user={this.context.user}
+                      />
+
+                      <button
+                        // onClick={(this.refreshPage, this.closeModal)}
+                        onClick={this.closeModal}
+                      >
+                        OK
+                      </button>
                     </Modal>
                   </article>
                 ))}
