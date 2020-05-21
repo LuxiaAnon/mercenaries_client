@@ -97,7 +97,11 @@ export class AllMissions extends Component {
             <div>
               <p>Alignment: </p>
 
-              <select name="alignment" onChange={this.handleSelect}>
+              <select
+                className="one-filter"
+                name="alignment"
+                onChange={this.handleSelect}
+              >
                 <option value="All">All</option>
                 <option value="Good">Good</option>
                 <option value="Neutral">Neutral</option>
@@ -119,9 +123,13 @@ export class AllMissions extends Component {
             </div>
 
             <div>
-              <p>Recommend rank: </p>
+              <p className="long-filter-name">Recommend rank: </p>
 
-              <select name="recommended_rank" onChange={this.handleSelect}>
+              <select
+                className="one-filter"
+                name="recommended_rank"
+                onChange={this.handleSelect}
+              >
                 <option value="All">All</option>
                 <option value="1">1</option>
                 <option value="2">2</option>

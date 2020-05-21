@@ -8,10 +8,8 @@ const HomeNotConnected = (props) => {
         <h1>MERCENARIES</h1>
         <main>
           <div className="home-catchy-phrase-container">
-            <h2>
-              A long enough catchy phrase to recruit a lot of Mercenaries in two
-              rows it is better
-            </h2>
+            {/* <h2>IF YOU CAN CARRY A GUN SOMEONE NEEDS YOU</h2> */}
+            <h2>If you can use a gun, someone needs you.</h2>
           </div>
           <section className="home-benefits">
             <article>
@@ -24,10 +22,9 @@ const HomeNotConnected = (props) => {
                 />
               </figure>
               <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi{" "}
+                We offer missions for all alignments. Good, neutral or even
+                evils mercenaries will find some missions which fit them. But as
+                you can guess, we do not organize afterworks.
               </p>
             </article>
             <article>
@@ -40,10 +37,9 @@ const HomeNotConnected = (props) => {
                 />
               </figure>
               <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi{" "}
+                We garantee instant and secure payments. As soon you send us the
+                proof of achievement of your mission, your Mercenaries bank
+                account will be credited.
               </p>
             </article>
             <article>
@@ -56,10 +52,9 @@ const HomeNotConnected = (props) => {
                 />
               </figure>
               <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi{" "}
+                We are present since the Revolution of 2032. If you can fight
+                don't be affraid of poverty, because we will always have mission
+                for you. That's the freedom.
               </p>
             </article>
             <article>
@@ -72,10 +67,9 @@ const HomeNotConnected = (props) => {
                 />
               </figure>
               <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation ullamco laboris
-                nisi{" "}
+                We have a lot of training to improve your differents skills.
+                Weapons, healthcare and even driving lessons. We are sure you've
+                always wanted drive a mecha.
               </p>
             </article>
           </section>

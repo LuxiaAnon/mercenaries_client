@@ -106,6 +106,13 @@ export default {
       .patch("/api/trainings/edit/" + idTraining, data)
       .then((res) => res.data)
       .catch(errorHandler)
+  },
+
+  deleteAUser(id) {
+    return service
+      .patch("/api/users/delete/" + id)
+      .then((res) => res.data)
+      .catch(errorHandler)
   }
 
 

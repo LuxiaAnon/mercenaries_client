@@ -5,11 +5,16 @@ import apiHandler from "../../api/apiHandler";
 import "./Dashboard.css";
 import Modal from "react-modal";
 import EndingMission from "../../components/EndingMission/EndingMission";
+import EndingTraining from "../../components/EndingTraining/EndingTraining";
+import { withRouter } from "react-router-dom";
+import DeleteUser from "../../components/DeleteUser/DeleteUser";
 
 export class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      allMissions: [],
+      allTrainings: [],
       activeMissions: [],
       activeTrainings: [],
       finishedMissions: [],
@@ -18,29 +23,63 @@ export class Dashboard extends Component {
       missionsPage: false,
       trainingsPage: false,
       modalMissionIsOpen: null,
+      modalTrainingIsOpen: null,
+      modalDeleteIsOpen: false,
     };
     this.hundleSelect = this.hundleSelect.bind(this);
+    this.handleMission = this.handleMission.bind(this);
+    this.filterHandler = this.filterHandler.bind(this);
+    this.deleteUser = this.deleteUser.bind(this);
+
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
-    // this.forceUpdateHandler = this.forceUpdateHandler.bind(this);
-    this.refreshPage = this.refreshPage.bind(this);
-  }
-  // forceUpdateHandler() {
-  //   console.log("yo");
-  //   this.forceUpdate();
-  // }
 
-  refreshPage() {
-    window.location.reload();
+    this.openTrainingModal = this.openTrainingModal.bind(this);
+    this.closeModalTraining = this.closeModalTraining.bind(this);
+
+    this.openDeleteModal = this.openDeleteModal.bind(this);
+    this.closeModalDelete = this.closeModalDelete.bind(this);
   }
+
+  handleMission(mission) {
+    let allMissions = { ...this.state.allMissions };
+    let index = allMissions.indexOf(
+      allMissions.find((x) => x._id === mission._id)
+    );
+    allMissions[index] = mission;
+    this.setState({ allMissions: allMissions });
+    this.filterHandler();
+  }
+
   openModal(index) {
     this.setState({ modalMissionIsOpen: index });
-    console.log("bonjour je suis openModal");
   }
-
   closeModal() {
     this.setState({ modalMissionIsOpen: null });
-    // this.forceUpdateHandler();
+  }
+  openTrainingModal(index) {
+    this.setState({ modalTrainingIsOpen: index });
+  }
+
+  closeModalTraining() {
+    this.setState({ closeModalTraining: null });
+  }
+
+  openDeleteModal() {
+    this.setState({ modalTrainingIsOpen: true });
+  }
+
+  closeModalDelete() {
+    this.setState({ modalTrainingIsOpen: false });
+  }
+
+  deleteUser() {
+    apiHandler.deleteAUser(this.props.context.user._id).then((apiRes) => {
+      console.log(apiRes);
+      this.props.history.push("/").catch((err) => {
+        console.log(err);
+      });
+    });
   }
 
   skillRating = (name) => {
@@ -100,64 +139,72 @@ export class Dashboard extends Component {
 
   componentDidMount() {
     this.setState({ isLoading: true });
-    let grenier = {};
-    apiHandler
-      .getAllMissions()
-      .then((apiRes) => {
-        grenier.activeMissions = apiRes.filter((mission) => {
-          if (
-            mission.participants &&
-            mission.participants.includes(this.props.context.user._id) &&
-            !mission.previous_participants.includes(
-              this.props.context.user._id
-            ) &&
-            mission.available &&
-            mission.winner !== this.props.context.user._id
-          ) {
-            return true;
-          }
-          return false;
-        });
-        grenier.finishedMissions = apiRes.filter((mission) => {
-          if (
-            mission.winner &&
-            mission.winner === this.props.context.user._id
-          ) {
-            return true;
-          }
-          return false;
-        });
-        this.setState(grenier);
-      })
-      .catch((err) => console.log(err));
+    apiHandler.getAllMissions().then((apiRes) => {
+      this.setState({ allMissions: apiRes });
+    });
     apiHandler
       .getAllTrainings()
       .then((apiRes) => {
-        grenier.activeTrainings = apiRes.filter((training) => {
-          if (
-            training.trainees &&
-            training.trainees.includes(this.props.context.user._id)
-          ) {
-            return true;
-          }
-          return false;
-        });
-        grenier.finishedTrainings = apiRes.filter((training) => {
-          if (
-            training.previous_trainees &&
-            training.previous_trainees.includes(this.props.context.user._id)
-          ) {
-            return true;
-          }
-          return false;
-        });
-        this.setState(grenier);
+        this.setState({ allTrainings: apiRes });
+        this.filterHandler();
       })
+      .catch((err) => console.log(err))
+
       .catch((err) => console.log(err));
-    grenier.isLoading = false;
+  }
+
+  filterHandler() {
+    console.log(this.state.allMissions);
+    let allMissions = [...this.state.allMissions];
+    let allTrainings = [...this.state.allTrainings];
+    console.log(allMissions);
+    this.setState({ isLoading: true });
+    this.setState({
+      activeMissions: allMissions.filter((mission) => {
+        if (
+          mission.participants &&
+          mission.participants.includes(this.props.context.user._id) &&
+          !mission.previous_participants.includes(
+            this.props.context.user._id
+          ) &&
+          mission.available &&
+          mission.winner !== this.props.context.user._id
+        ) {
+          return true;
+        }
+        return false;
+      }),
+      finishedMissions: allMissions.filter((mission) => {
+        if (mission.winner && mission.winner === this.props.context.user._id) {
+          return true;
+        }
+        return false;
+      }),
+      activeTrainings: allTrainings.filter((training) => {
+        if (
+          training.trainees &&
+          training.trainees.includes(this.props.context.user._id) &&
+          !training.previous_trainees.includes(this.props.context.user._id)
+        ) {
+          return true;
+        }
+        return false;
+      }),
+      finishedTrainings: allTrainings.filter((training) => {
+        if (
+          training.previous_trainees &&
+          training.previous_trainees.includes(this.props.context.user._id)
+        ) {
+          return true;
+        }
+        return false;
+      }),
+      isLoading: false,
+    });
   }
 
   render() {
+    console.log("on m'appelle");
     const customStyles = {
       content: {
         backgroundColor: "var(--darkBlue)",
@@ -275,6 +322,18 @@ export class Dashboard extends Component {
               <Link to="/update-my-profile">
                 <button>Update my profile</button>
               </Link>
+              <button onClick={() => this.openModalDelete()}>
+                Delete my account
+              </button>
+              <Modal
+                isOpen={this.state.modalDeleteIsOpen}
+                style={customStyles}
+                overlayClassName="Overlay"
+              >
+                <DeleteUser user={this.context.user} />
+                <button onClick={() => this.deleteUser()}>OK</button>
+                <button onClick={() => this.closeModalDelete()}>No</button>
+              </Modal>
             </section>
           )}
           {this.state.missionsPage && (
@@ -300,7 +359,9 @@ export class Dashboard extends Component {
                     >
                       <EndingMission
                         mission={mission}
+                        // refresh={this.refresh}
                         user={this.context.user}
+                        handleMission={this.handleMission}
                       />
 
                       <button
@@ -343,12 +404,41 @@ export class Dashboard extends Component {
                       </Link>
                     </figure>
                     <h4>{training.name}</h4>
+                    <br />
                     <span>{training.category}</span>
                     <span className="right orange">{training.price}₡</span>
+                    <br />
+                    {this.props.context.user.cash >= training.price && (
+                      <React.Fragment>
+                        <button onClick={() => this.openTrainingModal(index)}>
+                          Train
+                        </button>
+                        <Modal
+                          isOpen={this.state.modalTrainingIsOpen === index}
+                          style={customStyles}
+                          overlayClassName="Overlay"
+                        >
+                          <EndingTraining
+                            training={training}
+                            // user={this.context.user}
+                          />
+
+                          <button
+                            // onClick={(this.refreshPage, this.closeModal)}
+                            onClick={this.closeModalTraining}
+                          >
+                            OK
+                          </button>
+                        </Modal>
+                      </React.Fragment>
+                    )}
+                    {this.props.context.user.cash < training.price && (
+                      <h3>You can't afford this training</h3>
+                    )}
                   </article>
                 ))}
               </div>
-              <h3>My finished trainings</h3>
+              {/* <h3>My finished trainings</h3>
               <div className="all-missions-cards">
                 {this.state.finishedTrainings.map((training, index) => (
                   <article key={index} className="one-training-card">
@@ -362,7 +452,7 @@ export class Dashboard extends Component {
                     <span className="right orange">{training.price}₡</span>
                   </article>
                 ))}
-              </div>
+              </div> */}
             </section>
           )}
         </main>
@@ -371,4 +461,4 @@ export class Dashboard extends Component {
   }
 }
 
-export default withUser(Dashboard);
+export default withRouter(withUser(Dashboard));

@@ -3,6 +3,7 @@ import "./OneTraining.css";
 import apiHandler from "../../api/apiHandler.js";
 import { withUser } from "../../components/Auth/withUser";
 import WrappedMap from "../../components/WrappedMap";
+import { withRouter } from "react-router-dom";
 
 export class OneTraining extends Component {
   constructor(props) {
@@ -50,41 +51,46 @@ export class OneTraining extends Component {
     if (!this.state.oneTraining) return null;
     return (
       <React.Fragment>
-        <section>
-          <figure className="image-training">
-            <img
-              src={this.state.oneTraining.image}
-              alt={this.state.oneTraining.name}
-            />
-          </figure>
+        <h2 className="big-title">{this.state.oneTraining.name} </h2>
+        <section className="all-one-training-page">
           <article className="infos-training">
-            <h2>{this.state.oneTraining.name} </h2>
-            <div>
-              <p>
-                <strong>Category: </strong>
-                {this.state.oneTraining.category}
-              </p>
-              <p>
-                <strong>Skill learned: </strong>
-                {this.state.oneTraining.skill_learned}
-              </p>
-              <p>
-                <strong>Recommended rank: </strong>
-                {this.state.oneTraining.recommended_rank}
-              </p>
+            <figure className="image-training">
+              <img
+                src={this.state.oneTraining.image}
+                alt={this.state.oneTraining.name}
+              />
+            </figure>
+            <div className="info-and-button">
+              <div>
+                <p>
+                  <strong>Category: </strong>
+                  {this.state.oneTraining.category}
+                </p>
+                <p>
+                  <strong>Skill learned: </strong>
+                  {this.state.oneTraining.skill_learned}
+                </p>
+                <p>
+                  <strong>Recommended rank: </strong>
+                  {this.state.oneTraining.recommended_rank}
+                </p>
+                <p>{this.state.oneTraining.details}</p>
+              </div>
             </div>
-            <p>{this.state.oneTraining.details}</p>
-
-            <div className="button-box">
-              <button onClick={(e) => this.hundleJoin()}>Go!</button>
-            </div>
+            {!this.state.oneTraining.trainees.includes(
+              this.props.context.user._id
+            ) && (
+              <div className="button-box">
+                <button onClick={(e) => this.hundleJoin()}>Go!</button>
+              </div>
+            )}
           </article>
           <div className="one-training-map">
             <WrappedMap
               googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=${process.env.REACT_APP_GOOGLE_KEY}`}
               loadingElement={<div style={{ height: "100%" }} />}
               containerElement={<div style={{ height: "100%" }} />}
-              mapElement={<div style={{ height: "100%" }} />}
+              mapElement={<div style={{ height: "100%" }} className="mapmap" />}
               events={[this.state.oneTraining]}
             />
           </div>
@@ -94,4 +100,4 @@ export class OneTraining extends Component {
   }
 }
 
-export default withUser(OneTraining);
+export default withRouter(withUser(OneTraining));

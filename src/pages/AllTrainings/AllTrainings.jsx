@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import apiHandler from "../../api/apiHandler";
 import "./AllTrainings.css";
 import WrappedMap from "../../components/WrappedMap";
+import { withUser } from "../../components/Auth/withUser";
 
 export class AllTrainings extends Component {
   constructor(props) {
@@ -15,10 +16,30 @@ export class AllTrainings extends Component {
   }
   // permet le chargement des données de l'API dans le state de la classe
   componentDidMount() {
+    let grenier = {};
     apiHandler
       .getAllTrainings()
       .then((apiRes) => {
-        this.setState({ selectedTrainings: apiRes, allTrainings: apiRes });
+        grenier.allTrainings = apiRes.filter((training) => {
+          if (
+            !training.previous_trainees.includes(this.props.context.user._id)
+          ) {
+            return true;
+          } else {
+            return false;
+          }
+        });
+        grenier.selectedTrainings = apiRes.filter((training) => {
+          if (
+            !training.previous_trainees.includes(this.props.context.user._id)
+          ) {
+            return true;
+          } else {
+            return false;
+          }
+        });
+        this.setState(grenier);
+        console.log(this.state);
       })
       .catch((err) => {
         console.log(err);
@@ -38,17 +59,19 @@ export class AllTrainings extends Component {
   };
 
   render() {
-    const filteredArray = [...this.state.allTrainings].filter((training) => {
-      for (let filter in this.state.filter) {
-        if (
-          this.state.filter[filter] &&
-          training[filter] !== this.state.filter[filter]
-        ) {
-          return false;
+    const filteredArray = [...this.state.selectedTrainings].filter(
+      (training) => {
+        for (let filter in this.state.filter) {
+          if (
+            this.state.filter[filter] &&
+            training[filter] !== this.state.filter[filter]
+          ) {
+            return false;
+          }
         }
+        return true;
       }
-      return true;
-    });
+    );
     // console.log(this.state);
     // console.log(filteredArray);
 
@@ -70,7 +93,7 @@ export class AllTrainings extends Component {
                 <option value="Driving">Driving</option>
               </select>
             </div>
-            <div>
+            {/* <div>
               <p>Required level</p>
               <select name="required_level" onChange={this.handleSelect}>
                 <option value="All">All</option>
@@ -79,7 +102,7 @@ export class AllTrainings extends Component {
                 <option value="2">Adept</option>
                 <option value="3">Expert</option>
               </select>
-            </div>
+            </div> */}
           </div>
         </div>
         <section className="trainings-list">
@@ -115,4 +138,4 @@ export class AllTrainings extends Component {
   }
 }
 
-export default AllTrainings;
+export default withUser(AllTrainings);

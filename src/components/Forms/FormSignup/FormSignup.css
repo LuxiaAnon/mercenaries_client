@@ -99,6 +99,7 @@
     border-radius: 50%;
     border: 5px solid var(--fail);
     cursor: pointer;
+    margin: 1vw;
 }
 
 .vehicule-picture.clicked {

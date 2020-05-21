@@ -3,6 +3,7 @@ import "./OneMission.css";
 import apiHandler from "../../api/apiHandler.js";
 import { withUser } from "../../components/Auth/withUser";
 import WrappedMap from "../../components/WrappedMap";
+import { withRouter } from "react-router-dom";
 
 export class OneMission extends Component {
   constructor(props) {
@@ -20,6 +21,7 @@ export class OneMission extends Component {
       .updateAMission(id, data)
       .then((apiRes) => {
         console.log(apiRes.data);
+        this.props.history.goBack();
       })
       .catch((err) => console.log(err));
   }
@@ -87,9 +89,13 @@ export class OneMission extends Component {
               <strong>Proof of succes: </strong>
               {this.state.oneMission.proof_of_succes}
             </p>
-            <div className="button-box">
-              <button onClick={(e) => this.hundleJoin()}>Go!</button>
-            </div>
+            {!this.state.oneMission.participants.includes(
+              this.props.context.user._id
+            ) && (
+              <div className="button-box">
+                <button onClick={(e) => this.hundleJoin()}>Go!</button>
+              </div>
+            )}
           </article>
           <div className="one-mission-map">
             <WrappedMap
@@ -106,4 +112,4 @@ export class OneMission extends Component {
   }
 }
 
-export default withUser(OneMission);
+export default withRouter(withUser(OneMission));

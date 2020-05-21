@@ -46,6 +46,8 @@
 }
 
 
+
+
 .filter-bar p {
     margin-right: 1%;
 }
@@ -61,13 +63,13 @@
 
 .all-missions-cards {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 400px));
+    grid-template-columns: repeat(auto-fit, minmax(200px, 300px));
     grid-gap: 3vh;
-    margin: 2vh auto;
+    margin: 2vh auto
 }
 
 .one-mission-card {
-    height: 32vh;
+    max-height: 32vh;
     margin-bottom: 3vh;
 }
 
@@ -112,12 +114,12 @@
 }
 
 @media(min-width:900px) {
-    /* .all-missions-cards {
-        display: grid;
+    .all-missions-cards {
+        /* display: grid;
         grid-template-columns: repeat(4, 1fr);
-        grid-gap: 3vh;
-        margin: 2vh 2vw;
-    } */
+        grid-gap: 3vh; */
+        margin: 2vh 3%;
+    }
 
     #missions-list {
         text-align: center;
@@ -128,6 +130,10 @@
 
     .filter-bar {
         display: flex;
+    }
+
+    .long-filter-name {
+        width: 8vw;
     }
 
 }

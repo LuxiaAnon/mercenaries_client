@@ -84,23 +84,11 @@ export class FormUpdateProfile extends Component {
   };
 
   handleSkillClick = (e, name) => {
-    // console.log("i am clicked");
-    // console.log(
-    //   this.state.skills[e.target.getAttribute("id")] +
-    //     " - " +
-    //     Number(e.target.getAttribute("data-lvl"))
-    // );
-
     const value =
       this.state.skills[e.target.getAttribute("id")] ===
       Number(e.target.getAttribute("data-lvl"))
         ? 0
         : Number(e.target.getAttribute("data-lvl"));
-
-    // console.log("value : " + value);
-    // console.log(this.state.skills[e.target.getAttribute("id")]);
-    // console.log(e.target.getAttribute("id"));
-    // console.log(Number(e.target.getAttribute("data-lvl")));
     this.setState({
       skills: {
         ...this.state.skills,
@@ -189,7 +177,7 @@ export class FormUpdateProfile extends Component {
       .then((apiRes) => {
         console.log(apiRes);
         this.props.context.setUser(apiRes);
-        this.props.history.push("/");
+        this.props.history.goBack();
       })
       .catch((error) => {
         console.log(error);
@@ -339,4 +327,4 @@ export class FormUpdateProfile extends Component {
   }
 }
 
-export default withUser(FormUpdateProfile);
+export default withUser(withRouter(FormUpdateProfile));

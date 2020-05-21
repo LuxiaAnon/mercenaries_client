@@ -59,9 +59,9 @@
 
 .all-trainings-cards {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 400px));
+    grid-template-columns: repeat(auto-fit, minmax(200px, 300px));
     grid-gap: 3vh;
-    margin: 2vh auto;
+    margin: 2vh auto
 }
 
 .one-training-card {
@@ -110,12 +110,12 @@
 }
 
 @media(min-width:900px) {
-    /* .all-trainings-cards {
-        display: grid;
+    .all-trainings-cards {
+        /* display: grid;
         grid-template-columns: repeat(4, 1fr);
-        grid-gap: 3vh;
-        margin: 2vh 2vw;
-    } */
+        */
+        margin: 2vh 3%;
+    }
 
     #trainings-list {
         text-align: center;

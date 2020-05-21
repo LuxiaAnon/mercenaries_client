@@ -43,6 +43,60 @@
 }
 
 .one-training-map {
+    margin: 0 auto !important;
+    /* border-radius: 50%; */
     width: 100vw;
-    height: 100vh;
+    height: 100vw;
+}
+
+@media (min-width:700px) {
+
+    .one-training-map {
+        /* margin: 5vh auto; */
+        /* border-radius: 50%; */
+        width: 35vw;
+        height: 30vw;
+
+    }
+
+    .mapmap {
+        /* padding-top: 5%; */
+        border-radius: 10px;
+
+    }
+
+    .all-one-training-page {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .image-training img {
+        width: 45vw;
+        border: 10px solid var(--golden);
+        border-radius: 10px;
+    }
+
+    .button-box {
+        width: 100%;
+        text-align: center;
+        margin-top: 3vh;
+    }
+
+    .infos-training {
+        margin: 0 5%;
+        text-align: justify;
+        width: 40vw;
+    }
+
+    .big-title {
+        color: var(--orange);
+        text-align: center;
+        font-size: 2em;
+        margin-bottom: 5vh;
+    }
+
+    .info-and-button {
+        display: flex;
+    }
+
 }

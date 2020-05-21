@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import apiHandler from "../../api/apiHandler";
 import "./EndingMission.css";
 import { withUser } from "../../components/Auth/withUser";
+import { withRouter } from "react-router-dom";
 
 export class EndingMission extends Component {
   constructor(props) {
@@ -18,7 +19,15 @@ export class EndingMission extends Component {
   }
 
   componentDidMount() {
-    this.setState({ theMission: this.props.mission });
+    console.log(this.props.mission);
+    apiHandler
+      .getOneMission(this.props.mission._id)
+      .then((apiRes) => {
+        console.log(apiRes);
+        this.setState({ theMission: apiRes });
+      })
+      .catch((err) => console.log(err));
+
     // this.setState({ theUser: this.props.context.user });
     this.setState({ result: Math.random() });
     console.log(this.state.result);
@@ -37,20 +46,12 @@ export class EndingMission extends Component {
 
   handleResult() {
     if (this.state.result > 0.1) {
-      let newCash = this.props.context.user.cash + this.props.mission.reward;
+      let newCash = this.props.context.user.cash + this.state.theMission.reward;
       let newXp =
-        this.props.context.user.experience + this.props.mission.gained_xp;
+        this.props.context.user.experience + this.state.theMission.gained_xp;
       let newHonor =
-        this.props.context.user.honor + this.props.mission.honor_points;
-      // this.setState({
-      //   theUser: { ...this.state.theUser, cash: newCash },
-      // });
-      // this.setState({
-      //   theUser: { ...this.state.theUser, honor: newHonor },
-      // });
-      // this.setState({
-      //   theUser: { ...this.state.theUser, experience: newXp },
-      // });
+        this.props.context.user.honor + this.state.theMission.honor_points;
+
       let newRank;
       if (newXp >= 0 && newXp <= 500) newRank = 1;
       else if (newXp >= 501 && newXp <= 1200) newRank = 2;
@@ -76,15 +77,19 @@ export class EndingMission extends Component {
         });
       let theWinner = this.props.context.user._id;
       this.setState({
-        theMission: { ...this.state.theMission, winner: theWinner },
-      });
-      this.setState({
-        theMission: { ...this.state.theMission, available: false },
+        theMission: {
+          ...this.state.theMission,
+          winner: theWinner,
+          available: false,
+        },
       });
       apiHandler
         .updateAMission(this.state.theMission._id, this.state.theMission)
         .then((apiRes) => {
           console.log(apiRes);
+          console.log(this.props.history);
+          const { handleMission } = this.props;
+          handleMission(this.state.theMission);
         })
         .catch((err) => {
           console.log(err);
@@ -125,6 +130,7 @@ export class EndingMission extends Component {
   }
 
   render() {
+    console.log(this.props.history);
     console.log(this.state);
     return (
       <React.Fragment>
@@ -148,4 +154,4 @@ export class EndingMission extends Component {
   }
 }
 
-export default withUser(EndingMission);
+export default withRouter(withUser(EndingMission));
