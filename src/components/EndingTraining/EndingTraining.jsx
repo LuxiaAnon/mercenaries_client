@@ -174,6 +174,9 @@ export class EndingTraining extends Component {
             spaceship: true,
           },
         });
+        break;
+      default:
+        console.log("oups");
     }
     const fd = new FormData();
     this.buildFormData(fd, this.state);

@@ -62,11 +62,11 @@ export class Dashboard extends Component {
   }
 
   closeModalTraining() {
-    this.setState({ closeModalTraining: null });
+    console.log("je suis le la fermeture de modal training");
+    this.setState({ modalTrainingIsOpen: null });
   }
 
   openDeleteModal() {
-    console.log("je suis le delete modal");
     this.setState({ modalDeleteIsOpen: true });
   }
 
@@ -241,16 +241,18 @@ export class Dashboard extends Component {
                 {mercernary.alias.toUpperCase()}
               </h2>
               <img src={mercernary.avatar} alt="" />
-              <p>Rank: {mercernary.rank}</p>
-              <p>Honor: {mercernary.honor}</p>
-              <p>Bank: {mercernary.cash}₡</p>
+              <div className="info-container">
+                <p>Rank: {mercernary.rank}</p>
+                <p>Honor: {mercernary.honor}</p>
+                <p>Bank: {mercernary.cash}₡</p>
+              </div>
               {/* <p>Rank: {mercernary.rank}</p> */}
             </figure>
           </aside>
 
           {this.state.statPage && (
             <section className="dashboard-all-pages">
-              <div>
+              <div className="signup">
                 <section className="skills part">
                   <h3>Weapons:</h3>
 
@@ -302,47 +304,76 @@ export class Dashboard extends Component {
                     <div className="licences">
                       <div>
                         {this.haveDrivingLicence("car", "media/images/car.jpg")}
-                        <p>Car</p>
                       </div>
                       <div>
                         {this.haveDrivingLicence(
                           "mecha",
                           "media/images/mecha.jpg"
                         )}
-                        <p>Mecha</p>
                       </div>
                       <div>
                         {this.haveDrivingLicence(
                           "spaceship",
                           "media/images/spaceship.jpg"
                         )}
-                        <p>Spaceship</p>
                       </div>
                     </div>
                   </div>
                 </section>
+                <section className="buttons">
+                  <Link to="/update-my-profile">
+                    <button className="update-button">Update my profile</button>
+                  </Link>
+
+                  <button
+                    onClick={() => this.openDeleteModal()}
+                    className="delete-button"
+                  >
+                    Delete my account
+                  </button>
+
+                  <Modal
+                    isOpen={this.state.modalDeleteIsOpen}
+                    style={customStyles}
+                    overlayClassName="Overlay"
+                  >
+                    <DeleteUser user={this.context.user} />
+                    <button
+                      style={{
+                        border: "none",
+                        backgroundColor: "var(--fail)",
+                        color: "var(--almostWhite)",
+                        fontFamily: "Cairo,sans-serif",
+                        marginRight: "2vw",
+                        width: "20%",
+                        borderRadius: "5px",
+                      }}
+                      onClick={this.deleteUser}
+                    >
+                      OK
+                    </button>
+                    <button
+                      style={{
+                        border: "none",
+                        backgroundColor: "var(--almostWhite)",
+                        color: "var(--darkBlue)",
+                        fontFamily: "Cairo,sans-serif",
+                        width: "20%",
+                        borderRadius: "5px",
+                      }}
+                      onClick={this.closeModalDelete}
+                    >
+                      No
+                    </button>
+                  </Modal>
+                </section>
               </div>
-              <Link to="/update-my-profile">
-                <button>Update my profile</button>
-              </Link>
-              <button onClick={() => this.openDeleteModal()}>
-                Delete my account
-              </button>
-              <Modal
-                isOpen={this.state.modalDeleteIsOpen}
-                style={customStyles}
-                overlayClassName="Overlay"
-              >
-                <DeleteUser user={this.context.user} />
-                <button onClick={this.deleteUser}>OK</button>
-                <button onClick={this.closeModalDelete}>No</button>
-              </Modal>
             </section>
           )}
           {this.state.missionsPage && (
             <section className="dashboard-all-pages">
-              <h3>My missions</h3>
-              <div className="all-missions-cards">
+              <h3 className="title-dashboard">MY MISSIONS</h3>
+              <div className="all-missions-cards onDashboard">
                 {this.state.activeMissions.map((mission, index) => (
                   <article key={index} className="one-mission-card">
                     <figure className="image-container">
@@ -351,8 +382,19 @@ export class Dashboard extends Component {
                     <h4>{mission.name}</h4>
                     <span>{mission.category}</span>
                     <span className="right orange">{mission.reward}₡</span>
-
-                    <button onClick={() => this.openModal(index)}>
+                    <br />
+                    <button
+                      onClick={() => this.openModal(index)}
+                      style={{
+                        border: "none",
+                        marginTop: "1vh",
+                        backgroundColor: "var(--almostWhite)",
+                        color: "var(--darkBlue)",
+                        fontFamily: "Cairo,sans-serif",
+                        width: "fit-content",
+                        borderRadius: "5px",
+                      }}
+                    >
                       Sending proof
                     </button>
                     <Modal
@@ -377,8 +419,8 @@ export class Dashboard extends Component {
                 ))}
               </div>
 
-              <h3>My accomplished missions</h3>
-              <div className="all-missions-cards">
+              <h3 className="title-dashboard">MY ACCOMPLISHED MISSIONS</h3>
+              <div className="all-missions-cards onDashboard">
                 {this.state.finishedMissions.map((mission, index) => (
                   <article key={index} className="one-mission-card">
                     <figure className="image-container">
@@ -396,8 +438,8 @@ export class Dashboard extends Component {
           )}
           {this.state.trainingsPage && (
             <section className="dashboard-all-pages">
-              <h3>My trainings</h3>
-              <div className="all-trainings-cards">
+              <h3 className="title-dashboard">MY TRAININGS</h3>
+              <div className="all-trainings-cards height">
                 {this.state.activeTrainings.map((training, index) => (
                   <article key={index} className="one-training-card">
                     <figure>
@@ -412,7 +454,18 @@ export class Dashboard extends Component {
                     <br />
                     {this.props.context.user.cash >= training.price && (
                       <React.Fragment>
-                        <button onClick={() => this.openTrainingModal(index)}>
+                        <button
+                          onClick={() => this.openTrainingModal(index)}
+                          style={{
+                            border: "none",
+                            marginTop: "1vh",
+                            backgroundColor: "var(--almostWhite)",
+                            color: "var(--darkBlue)",
+                            fontFamily: "Cairo,sans-serif",
+                            width: "fit-content",
+                            borderRadius: "5px",
+                          }}
+                        >
                           Train
                         </button>
                         <Modal
@@ -435,7 +488,9 @@ export class Dashboard extends Component {
                       </React.Fragment>
                     )}
                     {this.props.context.user.cash < training.price && (
-                      <h3>You can't afford this training</h3>
+                      <p className="too-poor">
+                        You can't afford this training.
+                      </p>
                     )}
                   </article>
                 ))}

@@ -87,9 +87,9 @@ export class AllMissions extends Component {
 
     return (
       <React.Fragment>
-        <h1 id="missions-list">ALL MISSIONS</h1>
+        <h1 id="missionslist">ALL MISSIONS</h1>
         <div className="header-all-missions">
-          <a className="links-missions-pages" href="#map-missions">
+          <a className="links-missions-pages" href="#mapmissions">
             See on the map
           </a>
 
@@ -158,9 +158,6 @@ export class AllMissions extends Component {
           </div>
         </section>
         <section id="map-missions" className="map-part">
-          <a className="links-missions-pages" href="#missions-list">
-            Go back to the missions list
-          </a>
           <WrappedMap
             googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=${process.env.REACT_APP_GOOGLE_KEY}`}
             loadingElement={<div style={{ height: "100%" }} />}
@@ -169,6 +166,13 @@ export class AllMissions extends Component {
             events={filteredArray}
           />
         </section>
+        <a
+          className="links-missions-pages"
+          href="#missionslist"
+          id="mapmissions"
+        >
+          Go back to the missions list
+        </a>
       </React.Fragment>
     );
   }

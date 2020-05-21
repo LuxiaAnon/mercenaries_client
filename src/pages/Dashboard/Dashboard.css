@@ -1,11 +1,16 @@
+.dashboard-all-pages {
+    background-color: var(--darkBlue);
+    height: 75vh;
+    overflow-y: scroll;
+    width: 70vw;
+}
+
 .onDashboard {
     cursor: initial;
 }
 
-.dashboard-all-pages {
-    background-color: var(--darkBlue);
-    height: 75vh;
-    width: 70vw;
+.all-missions-cards.onDashboard {
+    overflow-y: unset;
 }
 
 .Dashboard {
@@ -16,6 +21,13 @@
     margin-bottom: 2%;
     display: flex;
     margin: 0 30vw 0 25vw;
+}
+
+.vehicule-picture.onDashboard {
+    height: 8vw;
+    width: 8vw;
+    margin-top: 0;
+    margin-bottom: 0;
 }
 
 .dashboard-nav button {
@@ -53,6 +65,18 @@
     padding-top: 20px;
 }
 
+/* .info-container {
+    background-color: var(--golden);
+    width: ;
+} */
+
+.avatar-container p {
+    font-weight: bold;
+    font-size: 1.5em;
+    margin-top: 1vw;
+}
+
+
 .alias-dashboard {
     position: absolute;
     font-size: 3em;
@@ -79,4 +103,36 @@
     right: 0;
     bottom: 0;
     background-color: rgba(250, 250, 250, 0.6)
+}
+
+.buttons {
+    margin: 0 auto;
+
+}
+
+.buttons button {
+    font-size: 1em;
+    width: fit-content;
+
+}
+
+.update-button {
+    margin-right: 1vw !important
+}
+
+.delete-button {
+    margin-left: 1vw !important;
+    background-color: var(--fail) !important
+}
+
+.title-dashboard {
+    margin-left: 2vw;
+    margin-top: 2vh;
+    color: var(--orange);
+}
+
+.too-poor {
+    margin-top: 1vh;
+    font-weight: 400;
+    color: var(--fail)
 }

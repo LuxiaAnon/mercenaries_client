@@ -72,14 +72,12 @@ export class AllTrainings extends Component {
         return true;
       }
     );
-    // console.log(this.state);
-    // console.log(filteredArray);
 
     return (
       <React.Fragment>
         <h1 id="trainings-list">ALL TRAININGS</h1>
         <div className="header-all-trainings">
-          <a className="links-trainings-pages" href="#trainings-map">
+          <a className="links-trainings-pages" href="#maptrainings">
             See on the map
           </a>
           <div className="filter-bar">
@@ -93,16 +91,6 @@ export class AllTrainings extends Component {
                 <option value="Driving">Driving</option>
               </select>
             </div>
-            {/* <div>
-              <p>Required level</p>
-              <select name="required_level" onChange={this.handleSelect}>
-                <option value="All">All</option>
-                <option value="0">Novice</option>
-                <option value="1">Apprentice</option>
-                <option value="2">Adept</option>
-                <option value="3">Expert</option>
-              </select>
-            </div> */}
           </div>
         </div>
         <section className="trainings-list">
@@ -115,16 +103,13 @@ export class AllTrainings extends Component {
                   </Link>
                 </figure>
                 <h4>{training.name}</h4>
-                <span>{training.category}</span>
+                <span>{training.skill_learned.toUpperCase()}</span>
                 <span className="right orange">{training.price}₡</span>
               </article>
             ))}
           </div>
         </section>
         <section id="map-trainings" className="map-part">
-          <a className="links-trainings-pages" href="#trainings-list">
-            Go back to the missions list
-          </a>
           <WrappedMap
             googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=${process.env.REACT_APP_GOOGLE_KEY}`}
             loadingElement={<div style={{ height: "100%" }} />}
@@ -132,6 +117,13 @@ export class AllTrainings extends Component {
             mapElement={<div style={{ height: "100%" }} />}
             events={filteredArray}
           />
+          <a
+            id="maptrainings"
+            className="links-trainings-pages"
+            href="#trainings-list"
+          >
+            Go back to the trainings list
+          </a>
         </section>
       </React.Fragment>
     );

@@ -52,16 +52,16 @@ export class OneMission extends Component {
     if (!this.state.oneMission) return null;
     return (
       <React.Fragment>
-        <section>
-          <figure className="image-mission">
-            <img
-              src={this.state.oneMission.image}
-              alt={this.state.oneMission.name}
-            />
-          </figure>
-          <article className="infos-mission">
-            <h2>{this.state.oneMission.name} </h2>
-            <div>
+        <h2 className="big-title">{this.state.oneMission.name}</h2>
+        <section className="all-one-training-page">
+          <article className="infos-training missions-plus">
+            <figure className="image-training">
+              <img
+                src={this.state.oneMission.image}
+                alt={this.state.oneMission.name}
+              />
+            </figure>
+            <div className="info-all-missions">
               <p>
                 <strong>Category: </strong>
                 {this.state.oneMission.category}
@@ -74,39 +74,44 @@ export class OneMission extends Component {
                 {this.state.oneMission.recommended_rank}
               </p>
               <p>
-                <strong>Reward: </strong> {this.state.oneMission.reward}
+                <strong>Reward: </strong> {this.state.oneMission.reward}₡
               </p>
               <p>
-                <strong>XP: </strong>
+                <strong>Experience: </strong>
                 {this.state.oneMission.gained_xp}
               </p>
               <p>
                 <strong>Honor: </strong> {this.state.oneMission.honor_points}
               </p>
+              <p>
+                <strong>Proof of succes: </strong>
+                {this.state.oneMission.proof_of_succes}
+              </p>
+              <p>
+                <strong>Brief: </strong> {this.state.oneMission.details}
+              </p>
+
+              {!this.state.oneMission.participants.includes(
+                this.props.context.user._id
+              ) && (
+                <div className="button-box missions-plus">
+                  <button onClick={(e) => this.hundleJoin()}>Go!</button>
+                </div>
+              )}
             </div>
-            <p>{this.state.oneMission.details}</p>
-            <p>
-              <strong>Proof of succes: </strong>
-              {this.state.oneMission.proof_of_succes}
-            </p>
-            {!this.state.oneMission.participants.includes(
-              this.props.context.user._id
-            ) && (
-              <div className="button-box">
-                <button onClick={(e) => this.hundleJoin()}>Go!</button>
-              </div>
-            )}
           </article>
-          <div className="one-mission-map">
+        </section>
+        <div>
+          <div className="one-training-map">
             <WrappedMap
               googleMapURL={`https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=geometry,drawing,places&key=${process.env.REACT_APP_GOOGLE_KEY}`}
               loadingElement={<div style={{ height: "100%" }} />}
               containerElement={<div style={{ height: "100%" }} />}
-              mapElement={<div style={{ height: "100%" }} />}
+              mapElement={<div style={{ height: "100%" }} className="mapmap" />}
               events={[this.state.oneMission]}
             />
           </div>
-        </section>
+        </div>
       </React.Fragment>
     );
   }

@@ -55,65 +55,62 @@ export default {
     return service
       .get("/api/trainings")
       .then((res) => res.data)
-      .catch(errorHandler)
+      .catch(errorHandler);
   },
 
   getOneMission(id) {
     return service
       .get("/api/missions/" + id)
       .then((res) => res.data)
-      .catch(errorHandler)
+      .catch(errorHandler);
   },
 
   getOneUser(id) {
     return service
       .get("/api/users/" + id)
       .then((res) => res.data)
-      .catch(errorHandler)
+      .catch(errorHandler);
   },
-
 
   getOneTraining(id) {
     return service
       .get("/api/trainings/" + id)
       .then((res) => res.data)
-      .catch(errorHandler)
+      .catch(errorHandler);
   },
 
   updateAMission(idMission, data) {
     return service
       .patch("/api/missions/edit/" + idMission, data)
       .then((res) => res.data)
-      .catch(errorHandler)
+      .catch(errorHandler);
   },
 
   updateAUser(idUser, data) {
     return service
       .patch("/api/users/edit/" + idUser, data)
       .then((res) => res.data)
-      .catch(errorHandler)
+      .catch(errorHandler);
   },
 
   updateUserCash(idUser, data) {
     return service
-      .patch("api/users/add-cash/" + idUser, data)
+      .patch("/api/users/add-cash/" + idUser, data)
       .then((res) => res.data)
-      .catch(errorHandler)
+      .catch(errorHandler);
   },
 
   updateATraining(idTraining, data) {
     return service
       .patch("/api/trainings/edit/" + idTraining, data)
       .then((res) => res.data)
-      .catch(errorHandler)
+      .catch(errorHandler);
   },
 
   deleteAUser(id) {
     return service
       .delete("/api/users/delete/" + id)
       .then((res) => res.data)
-      .catch(errorHandler)
-  }
-
-
+      .catch(errorHandler);
+  },
 };

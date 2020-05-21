@@ -3,6 +3,7 @@
     font-size: 2em;
     padding-top: 3vh;
     padding-bottom: 3vh;
+
 }
 
 /* .go-map {
@@ -61,7 +62,12 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 300px));
     grid-gap: 3vh;
-    margin: 2vh auto
+    margin: 2vh auto;
+
+}
+
+.height {
+    height: 60vh;
 }
 
 .one-training-card {
