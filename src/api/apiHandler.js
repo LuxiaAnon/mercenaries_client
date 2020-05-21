@@ -110,7 +110,7 @@ export default {
 
   deleteAUser(id) {
     return service
-      .patch("/api/users/delete/" + id)
+      .delete("/api/users/delete/" + id)
       .then((res) => res.data)
       .catch(errorHandler)
   }

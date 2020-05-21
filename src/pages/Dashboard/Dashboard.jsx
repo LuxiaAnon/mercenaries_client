@@ -42,7 +42,7 @@ export class Dashboard extends Component {
   }
 
   handleMission(mission) {
-    let allMissions = { ...this.state.allMissions };
+    let allMissions = [...this.state.allMissions];
     let index = allMissions.indexOf(
       allMissions.find((x) => x._id === mission._id)
     );
@@ -66,20 +66,25 @@ export class Dashboard extends Component {
   }
 
   openDeleteModal() {
-    this.setState({ modalTrainingIsOpen: true });
+    console.log("je suis le delete modal");
+    this.setState({ modalDeleteIsOpen: true });
   }
 
   closeModalDelete() {
-    this.setState({ modalTrainingIsOpen: false });
+    this.setState({ modalDeleteIsOpen: false });
   }
 
   deleteUser() {
-    apiHandler.deleteAUser(this.props.context.user._id).then((apiRes) => {
-      console.log(apiRes);
-      this.props.history.push("/").catch((err) => {
+    apiHandler
+      .deleteAUser(this.props.context.user._id)
+      .then((apiRes) => {
+        console.log(apiRes);
+        this.props.context.removeUser();
+        this.props.history.push("/");
+      })
+      .catch((err) => {
         console.log(err);
       });
-    });
   }
 
   skillRating = (name) => {
@@ -157,7 +162,6 @@ export class Dashboard extends Component {
     console.log(this.state.allMissions);
     let allMissions = [...this.state.allMissions];
     let allTrainings = [...this.state.allTrainings];
-    console.log(allMissions);
     this.setState({ isLoading: true });
     this.setState({
       activeMissions: allMissions.filter((mission) => {
@@ -204,7 +208,6 @@ export class Dashboard extends Component {
   }
 
   render() {
-    console.log("on m'appelle");
     const customStyles = {
       content: {
         backgroundColor: "var(--darkBlue)",
@@ -322,7 +325,7 @@ export class Dashboard extends Component {
               <Link to="/update-my-profile">
                 <button>Update my profile</button>
               </Link>
-              <button onClick={() => this.openModalDelete()}>
+              <button onClick={() => this.openDeleteModal()}>
                 Delete my account
               </button>
               <Modal
@@ -331,8 +334,8 @@ export class Dashboard extends Component {
                 overlayClassName="Overlay"
               >
                 <DeleteUser user={this.context.user} />
-                <button onClick={() => this.deleteUser()}>OK</button>
-                <button onClick={() => this.closeModalDelete()}>No</button>
+                <button onClick={this.deleteUser}>OK</button>
+                <button onClick={this.closeModalDelete}>No</button>
               </Modal>
             </section>
           )}
@@ -359,7 +362,6 @@ export class Dashboard extends Component {
                     >
                       <EndingMission
                         mission={mission}
-                        // refresh={this.refresh}
                         user={this.context.user}
                         handleMission={this.handleMission}
                       />

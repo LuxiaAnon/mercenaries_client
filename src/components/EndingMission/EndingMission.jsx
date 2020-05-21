@@ -86,8 +86,9 @@ export class EndingMission extends Component {
       apiHandler
         .updateAMission(this.state.theMission._id, this.state.theMission)
         .then((apiRes) => {
-          console.log(apiRes);
-          console.log(this.props.history);
+          // console.log(apiRes);
+          console.log("winner", this.state.theMission);
+          // console.log(this.props.history);
           const { handleMission } = this.props;
           handleMission(this.state.theMission);
         })
@@ -107,6 +108,7 @@ export class EndingMission extends Component {
         .updateAMission(this.state.theMission._id, this.state.theMission)
         .then((apiRes) => {
           console.log(apiRes);
+          console.log("losers", this.state.theMission);
         })
         .catch((err) => {
           console.log(err);
