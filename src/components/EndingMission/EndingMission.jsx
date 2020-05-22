@@ -43,7 +43,7 @@ export class EndingMission extends Component {
   }
 
   handleResult() {
-    if (this.state.result > 0.9) {
+    if (this.state.result > 0.5) {
       let newCash = this.props.context.user.cash + this.state.theMission.reward;
       let newXp =
         this.props.context.user.experience + this.state.theMission.gained_xp;
@@ -113,7 +113,7 @@ export class EndingMission extends Component {
   }
 
   successOrFailure() {
-    if (this.state.result > 0.9) {
+    if (this.state.result > 0.5) {
       return (
         <React.Fragment>
           <h1 className="succes">SUCCES</h1>

@@ -27,6 +27,9 @@ class FormSignup extends Component {
       mecha: false,
       spaceship: false,
     },
+    aliasError: "",
+    passwordError: "",
+    emailError: "",
   };
 
   skillRating = (name) => {
@@ -99,27 +102,56 @@ class FormSignup extends Component {
     this.setState({ [key]: value });
   };
 
+  validate = () => {
+    let aliasError = "";
+    let passwordError = "";
+    let emailError = "";
+
+    if (!this.state.alias) {
+      aliasError = "You need an Alias";
+    }
+
+    if (!this.state.email) {
+      emailError = "You need an email";
+    }
+
+    if (this.state.password.length < 5) {
+      passwordError = "Your password should be longer than 4 characters ";
+    }
+
+    if (passwordError || aliasError || emailError) {
+      this.setState({ passwordError, aliasError, emailError });
+      return false;
+    }
+    return true;
+  };
+
   handleSubmit = (event) => {
     event.preventDefault();
-    const fd = new FormData();
-    if (this.state.avatar) fd.append("avatar", this.state.avatar);
-    fd.append("email", this.state.email);
-    fd.append("alias", this.state.alias);
-    fd.append("password", this.state.password);
-    fd.append("favorite_weapon", this.state.favorite_weapon);
-    fd.append("catch_phrase", this.state.catch_phrase);
-    fd.append("skills", JSON.stringify(this.state.skills));
-    console.log("fd", fd);
-    apiHandler
-      .signup(fd)
-      .then((data) => {
-        console.log("data", data);
-        this.context.setUser(data);
-        this.props.history.push("/");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+
+    const isValid = this.validate();
+
+    if (isValid) {
+      const fd = new FormData();
+      if (this.state.avatar) fd.append("avatar", this.state.avatar);
+      fd.append("email", this.state.email);
+      fd.append("alias", this.state.alias);
+      fd.append("password", this.state.password);
+      fd.append("favorite_weapon", this.state.favorite_weapon);
+      fd.append("catch_phrase", this.state.catch_phrase);
+      fd.append("skills", JSON.stringify(this.state.skills));
+      console.log("fd", fd);
+      apiHandler
+        .signup(fd)
+        .then((data) => {
+          console.log("data", data);
+          this.context.setUser(data);
+          this.props.history.push("/");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   };
 
   render() {
@@ -146,10 +178,30 @@ class FormSignup extends Component {
             <div>
               <label htmlFor="email">Email: </label>
               <input type="email" name="email" id="email" />
+              <p
+                style={{
+                  fontSize: "20px",
+                  color: "var(--fail)",
+                  fontWeight: "bold",
+                  marginTop: "1vh",
+                }}
+              >
+                {this.state.emailError}
+              </p>
             </div>
             <div>
               <label htmlFor="password">Password: </label>
               <input type="password" name="password" />
+              <p
+                style={{
+                  fontSize: "20px",
+                  color: "var(--fail)",
+                  fontWeight: "bold",
+                  marginTop: "1vh",
+                }}
+              >
+                {this.state.passwordError}
+              </p>
             </div>
           </section>
           <section className="personality part">
@@ -157,6 +209,16 @@ class FormSignup extends Component {
             <div>
               <label htmlFor="alias">Alias: </label>
               <input type="text" name="alias" />
+              <p
+                style={{
+                  fontSize: "20px",
+                  color: "var(--fail)",
+                  fontWeight: "bold",
+                  marginTop: "1vh",
+                }}
+              >
+                {this.state.aliasError}
+              </p>
             </div>
             <div>
               <label htmlFor="favorite_weapon">Favorite weapon: </label>

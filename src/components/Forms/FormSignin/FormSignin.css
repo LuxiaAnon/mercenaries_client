@@ -13,13 +13,14 @@
 
 .login-form input {
 
-    margin-bottom: 2vh;
+    /* margin-bottom: 5vh; */
     width: 70%;
+    height: 3vh;
 }
 
 .login-form label {
 
-    margin-bottom: 2vh;
+    /* margin-bottom: 2vh; */
     display: inline-block;
     width: 20%;
     text-align: right;

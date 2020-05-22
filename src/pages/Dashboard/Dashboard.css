@@ -92,6 +92,7 @@
 
 .avatar-container img {
     height: 100%;
+
     border: 10px solid var(--darkBlue);
     border-radius: 10px;
 }

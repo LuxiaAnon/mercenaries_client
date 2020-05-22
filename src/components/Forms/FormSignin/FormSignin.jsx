@@ -9,7 +9,27 @@ class FormSignin extends Component {
 
   state = {
     email: "",
-    password: "",
+    passwordError: "",
+    emailError: "",
+  };
+
+  validate = () => {
+    let passwordError = "";
+    let emailError = "";
+
+    if (!this.state.email) {
+      emailError = "Fill this field";
+    }
+
+    if (!this.state.password) {
+      passwordError = "Fill this field";
+    }
+
+    if (passwordError || emailError) {
+      this.setState({ passwordError, emailError });
+      return false;
+    }
+    return true;
   };
 
   handleChange = (event) => {
@@ -28,18 +48,21 @@ class FormSignin extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
+    const isValid = this.validate();
 
-    apiHandler
-      .signin(this.state)
-      .then((data) => {
-        this.context.setUser(data);
-        this.props.closing();
-        this.props.history.push("/");
-      })
-      .catch((error) => {
-        console.log(error);
-        // Display error message here, if you set the state
-      });
+    if (isValid) {
+      apiHandler
+        .signin(this.state)
+        .then((data) => {
+          this.context.setUser(data);
+          this.props.closing();
+          this.props.history.push("/");
+        })
+        .catch((error) => {
+          console.log(error);
+          // Display error message here, if you set the state
+        });
+    }
   };
 
   render() {
@@ -52,9 +75,27 @@ class FormSignin extends Component {
         <h2>Welcome back</h2>
         <label htmlFor="email">Email: </label>
         <input type="email" id="email" name="email" />
+        <p
+          style={{
+            fontSize: "15px",
+            color: "var(--fail)",
+            fontWeight: "bold",
+          }}
+        >
+          {this.state.emailError}
+        </p>
         <br />
         <label htmlFor="password">Password: </label>
         <input type="password" id="password" name="password" />
+        <p
+          style={{
+            fontSize: "15px",
+            color: "var(--fail)",
+            fontWeight: "bold",
+          }}
+        >
+          {this.state.passwordError}
+        </p>
         <br />
         <button>Login</button>
       </form>
