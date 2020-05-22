@@ -66,7 +66,7 @@
     grid-template-columns: repeat(auto-fit, minmax(200px, 300px));
     grid-gap: 3vh;
     margin: 2vh auto;
-    overflow-y: scroll;
+    /* overflow-y: scroll; */
 }
 
 .one-mission-card {
@@ -96,6 +96,12 @@
 .orange {
     color: var(--orange);
 }
+
+.one-mission-card figure {
+    height: 20vh;
+    margin-bottom: 3vh;
+}
+
 
 .image-container {
     height: 80%;

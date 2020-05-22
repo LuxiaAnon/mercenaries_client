@@ -217,7 +217,9 @@ export class EndingTraining extends Component {
         )}
         {!this.state.timerOn && (
           <div className="sendingProof">
-            <h2>CONGRATS</h2>
+            <h2 style={{ color: "var(--success)", marginBottom: "2vh" }}>
+              CONGRATS
+            </h2>
             <div>
               Your skill level has been updated and your bank account debited of{" "}
               {this.state.theTraining.price}₡
