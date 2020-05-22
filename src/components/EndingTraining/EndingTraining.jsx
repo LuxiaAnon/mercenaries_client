@@ -49,15 +49,12 @@ export class EndingTraining extends Component {
           },
           isLoading: false,
         });
-        console.log(this.state);
       })
       .catch((err) => {
         console.log(err);
       });
 
-    // this.setState({ theUser: this.props.context.user });
-
-    let blabla = setTimeout(() => this.finishTimer(blabla), 2000);
+    let blabla = setTimeout(() => this.finishTimer(blabla), 4000);
   }
 
   finishTimer(timer) {
@@ -93,7 +90,6 @@ export class EndingTraining extends Component {
   handleTraining() {
     let newCash = this.state.cash - this.state.theTraining.price;
     this.setState({ cash: newCash });
-    // let skillLearned = this.state.theTraining.skill_learned;
     switch (this.state.theTraining.skill_learned) {
       case "pistols":
         this.setState({
@@ -178,17 +174,9 @@ export class EndingTraining extends Component {
       default:
         console.log("oups");
     }
+
     const fd = new FormData();
     this.buildFormData(fd, this.state);
-    apiHandler
-      .updateAUser(this.props.context.user._id, fd)
-      .then((apiRes) => {
-        console.log(apiRes);
-        this.props.context.setUser(apiRes);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
 
     let previousTrainee = [...this.state.theTraining.previous_trainees];
     previousTrainee.push(this.props.context.user._id);
@@ -198,14 +186,19 @@ export class EndingTraining extends Component {
         previous_trainees: previousTrainee,
       },
     });
+
+    apiHandler.updateAUser(this.props.context.user._id, fd).then((apiRes) => {
+      console.log(apiRes);
+      this.props.context.setUser(apiRes);
+    });
     apiHandler
       .updateATraining(this.state.theTraining._id, this.state.theTraining)
       .then((apiRes) => {
-        console.log(apiRes);
+        const { handleTraining } = this.props;
+        handleTraining(this.state.theTraining);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch((err) => console.log(err))
+      .catch((err) => console.log(err));
   }
 
   render() {
@@ -224,7 +217,11 @@ export class EndingTraining extends Component {
         )}
         {!this.state.timerOn && (
           <div className="sendingProof">
-            <div>Your skill level has been updated and your bank</div>
+            <h2>CONGRATS</h2>
+            <div>
+              Your skill level has been updated and your bank account debited of{" "}
+              {this.state.theTraining.price}₡
+            </div>
           </div>
         )}
       </React.Fragment>

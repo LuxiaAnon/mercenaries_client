@@ -9,6 +9,11 @@ class FormSignup extends Component {
 
   state = {
     tmpAvatar: "media/images/mercenary_default.jpg",
+    alias: "",
+    password: "",
+    catch_phrase: "",
+    favorite_weapon: "",
+    email: "",
     skills: {
       pistols: 0,
       assault_rifles: 0,
@@ -104,10 +109,11 @@ class FormSignup extends Component {
     fd.append("favorite_weapon", this.state.favorite_weapon);
     fd.append("catch_phrase", this.state.catch_phrase);
     fd.append("skills", JSON.stringify(this.state.skills));
-
+    console.log("fd", fd);
     apiHandler
       .signup(fd)
       .then((data) => {
+        console.log("data", data);
         this.context.setUser(data);
         this.props.history.push("/");
       })
@@ -139,7 +145,7 @@ class FormSignup extends Component {
           <section className="id part">
             <div>
               <label htmlFor="email">Email: </label>
-              <input type="email" name="email" />
+              <input type="email" name="email" id="email" />
             </div>
             <div>
               <label htmlFor="password">Password: </label>

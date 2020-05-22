@@ -21,6 +21,7 @@ export class OneTraining extends Component {
       .updateATraining(id, data)
       .then((apiRes) => {
         console.log(apiRes.data);
+        this.props.history.goBack();
       })
       .catch((err) => console.log(err));
   }

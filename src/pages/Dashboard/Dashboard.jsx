@@ -28,6 +28,7 @@ export class Dashboard extends Component {
     };
     this.hundleSelect = this.hundleSelect.bind(this);
     this.handleMission = this.handleMission.bind(this);
+    this.handleTraining = this.handleTraining.bind(this);
     this.filterHandler = this.filterHandler.bind(this);
     this.deleteUser = this.deleteUser.bind(this);
 
@@ -48,7 +49,15 @@ export class Dashboard extends Component {
     );
     allMissions[index] = mission;
     this.setState({ allMissions: allMissions });
-    this.filterHandler();
+  }
+
+  handleTraining(training) {
+    let allTrainings = [...this.state.allTrainings];
+    let index = allTrainings.indexOf(
+      allTrainings.find((x) => x._id === training._id)
+    );
+    allTrainings[index] = training;
+    this.setState({ allTrainings: allTrainings });
   }
 
   openModal(index) {
@@ -56,14 +65,15 @@ export class Dashboard extends Component {
   }
   closeModal() {
     this.setState({ modalMissionIsOpen: null });
+    this.filterHandler();
   }
   openTrainingModal(index) {
     this.setState({ modalTrainingIsOpen: index });
   }
 
   closeModalTraining() {
-    console.log("je suis le la fermeture de modal training");
     this.setState({ modalTrainingIsOpen: null });
+    this.filterHandler();
   }
 
   openDeleteModal() {
@@ -162,7 +172,7 @@ export class Dashboard extends Component {
     console.log(this.state.allMissions);
     let allMissions = [...this.state.allMissions];
     let allTrainings = [...this.state.allTrainings];
-    this.setState({ isLoading: true });
+    // this.setState({ isLoading: true });
     this.setState({
       activeMissions: allMissions.filter((mission) => {
         if (
@@ -374,142 +384,135 @@ export class Dashboard extends Component {
             <section className="dashboard-all-pages">
               <h3 className="title-dashboard">MY MISSIONS</h3>
               <div className="all-missions-cards onDashboard">
-                {this.state.activeMissions.map((mission, index) => (
-                  <article key={index} className="one-mission-card">
-                    <figure className="image-container">
-                      <img src={mission.image} alt={mission.name} />
-                    </figure>
-                    <h4>{mission.name}</h4>
-                    <span>{mission.category}</span>
-                    <span className="right orange">{mission.reward}₡</span>
-                    <br />
-                    <button
-                      onClick={() => this.openModal(index)}
-                      style={{
-                        border: "none",
-                        marginTop: "1vh",
-                        backgroundColor: "var(--almostWhite)",
-                        color: "var(--darkBlue)",
-                        fontFamily: "Cairo,sans-serif",
-                        width: "fit-content",
-                        borderRadius: "5px",
-                      }}
-                    >
-                      Sending proof
-                    </button>
-                    <Modal
-                      isOpen={this.state.modalMissionIsOpen === index}
-                      style={customStyles}
-                      overlayClassName="Overlay"
-                    >
-                      <EndingMission
-                        mission={mission}
-                        user={this.context.user}
-                        handleMission={this.handleMission}
-                      />
-
+                {this.state.activeMissions.length === 0 ? (
+                  <p>No results.</p>
+                ) : (
+                  this.state.activeMissions.map((mission, index) => (
+                    <article key={index} className="one-mission-card">
+                      <figure className="image-container">
+                        <img src={mission.image} alt={mission.name} />
+                      </figure>
+                      <h4>{mission.name}</h4>
+                      <span>{mission.category}</span>
+                      <span className="right orange">{mission.reward}₡</span>
+                      <br />
                       <button
-                        // onClick={(this.refreshPage, this.closeModal)}
-                        onClick={this.closeModal}
+                        onClick={() => this.openModal(index)}
+                        style={{
+                          border: "none",
+                          marginTop: "1vh",
+                          backgroundColor: "var(--almostWhite)",
+                          color: "var(--darkBlue)",
+                          fontFamily: "Cairo,sans-serif",
+                          width: "fit-content",
+                          borderRadius: "5px",
+                        }}
                       >
-                        OK
+                        Sending proof
                       </button>
-                    </Modal>
-                  </article>
-                ))}
+                      <Modal
+                        isOpen={this.state.modalMissionIsOpen === index}
+                        style={customStyles}
+                        overlayClassName="Overlay"
+                      >
+                        <EndingMission
+                          mission={mission}
+                          user={this.context.user}
+                          handleMission={this.handleMission}
+                        />
+
+                        <button
+                          // onClick={(this.refreshPage, this.closeModal)}
+                          onClick={this.closeModal}
+                        >
+                          OK
+                        </button>
+                      </Modal>
+                    </article>
+                  ))
+                )}
               </div>
 
               <h3 className="title-dashboard">MY ACCOMPLISHED MISSIONS</h3>
               <div className="all-missions-cards onDashboard">
-                {this.state.finishedMissions.map((mission, index) => (
-                  <article key={index} className="one-mission-card">
-                    <figure className="image-container">
-                      <Link to={`/mission-details/${mission._id}`}>
-                        <img src={mission.image} alt={mission.name} />
-                      </Link>
-                    </figure>
-                    <h4>{mission.name}</h4>
-                    <span>{mission.category}</span>
-                    <span className="right orange">{mission.reward}₡</span>
-                  </article>
-                ))}
+                {this.state.finishedMissions.length === 0 ? (
+                  <p>No results.</p>
+                ) : (
+                  this.state.finishedMissions.map((mission, index) => (
+                    <article key={index} className="one-mission-card">
+                      <figure className="image-container">
+                        <Link to={`/mission-details/${mission._id}`}>
+                          <img src={mission.image} alt={mission.name} />
+                        </Link>
+                      </figure>
+                      <h4>{mission.name}</h4>
+                      <span>{mission.category}</span>
+                      <span className="right orange">{mission.reward}₡</span>
+                    </article>
+                  ))
+                )}
               </div>
             </section>
           )}
           {this.state.trainingsPage && (
             <section className="dashboard-all-pages">
-              <h3 className="title-dashboard">MY TRAININGS</h3>
+              <h3 className="title-dashboard">MY TRAININGS TO COME</h3>
               <div className="all-trainings-cards height">
-                {this.state.activeTrainings.map((training, index) => (
-                  <article key={index} className="one-training-card">
-                    <figure>
-                      <Link to={`/training-details/${training._id}`}>
-                        <img src={training.image} alt={training.name} />
-                      </Link>
-                    </figure>
-                    <h4>{training.name}</h4>
-                    <br />
-                    <span>{training.category}</span>
-                    <span className="right orange">{training.price}₡</span>
-                    <br />
-                    {this.props.context.user.cash >= training.price && (
-                      <React.Fragment>
-                        <button
-                          onClick={() => this.openTrainingModal(index)}
-                          style={{
-                            border: "none",
-                            marginTop: "1vh",
-                            backgroundColor: "var(--almostWhite)",
-                            color: "var(--darkBlue)",
-                            fontFamily: "Cairo,sans-serif",
-                            width: "fit-content",
-                            borderRadius: "5px",
-                          }}
-                        >
-                          Train
-                        </button>
-                        <Modal
-                          isOpen={this.state.modalTrainingIsOpen === index}
-                          style={customStyles}
-                          overlayClassName="Overlay"
-                        >
-                          <EndingTraining
-                            training={training}
-                            // user={this.context.user}
-                          />
-
+                {this.state.activeTrainings.length === 0 ? (
+                  <p>No results.</p>
+                ) : (
+                  this.state.activeTrainings.map((training, index) => (
+                    <article key={index} className="one-training-card">
+                      <figure>
+                        <Link to={`/training-details/${training._id}`}>
+                          <img src={training.image} alt={training.name} />
+                        </Link>
+                      </figure>
+                      <h4>{training.name}</h4>
+                      <br />
+                      <span>{training.category}</span>
+                      <span className="right orange">{training.price}₡</span>
+                      <br />
+                      {this.props.context.user.cash >= training.price && (
+                        <React.Fragment>
                           <button
-                            // onClick={(this.refreshPage, this.closeModal)}
-                            onClick={this.closeModalTraining}
+                            onClick={() => this.openTrainingModal(index)}
+                            style={{
+                              border: "none",
+                              marginTop: "1vh",
+                              backgroundColor: "var(--almostWhite)",
+                              color: "var(--darkBlue)",
+                              fontFamily: "Cairo,sans-serif",
+                              width: "fit-content",
+                              borderRadius: "5px",
+                            }}
                           >
-                            OK
+                            Train
                           </button>
-                        </Modal>
-                      </React.Fragment>
-                    )}
-                    {this.props.context.user.cash < training.price && (
-                      <p className="too-poor">
-                        You can't afford this training.
-                      </p>
-                    )}
-                  </article>
-                ))}
+                          <Modal
+                            isOpen={this.state.modalTrainingIsOpen === index}
+                            style={customStyles}
+                            overlayClassName="Overlay"
+                          >
+                            <EndingTraining
+                              training={training}
+                              handleTraining={this.handleTraining}
+                            />
+                            <button onClick={this.closeModalTraining}>
+                              OK
+                            </button>
+                          </Modal>
+                        </React.Fragment>
+                      )}
+                      {this.props.context.user.cash < training.price && (
+                        <p className="too-poor">
+                          You can't afford this training.
+                        </p>
+                      )}
+                    </article>
+                  ))
+                )}
               </div>
-              {/* <h3>My finished trainings</h3>
-              <div className="all-missions-cards">
-                {this.state.finishedTrainings.map((training, index) => (
-                  <article key={index} className="one-training-card">
-                    <figure>
-                      <Link to={`/training-details/${training._id}`}>
-                        <img src={training.image} alt={training.name} />
-                      </Link>
-                    </figure>
-                    <h4>{training.name}</h4>
-                    <span>{training.category}</span>
-                    <span className="right orange">{training.price}₡</span>
-                  </article>
-                ))}
-              </div> */}
             </section>
           )}
         </main>

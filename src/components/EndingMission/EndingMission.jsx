@@ -19,7 +19,6 @@ export class EndingMission extends Component {
   }
 
   componentDidMount() {
-    console.log(this.props.mission);
     apiHandler
       .getOneMission(this.props.mission._id)
       .then((apiRes) => {
@@ -30,8 +29,7 @@ export class EndingMission extends Component {
 
     // this.setState({ theUser: this.props.context.user });
     this.setState({ result: Math.random() });
-    console.log(this.state.result);
-    let blabla = setTimeout(() => this.finishTimer(blabla), 2000);
+    let blabla = setTimeout(() => this.finishTimer(blabla), 4000);
   }
 
   finishTimer(timer) {
@@ -45,7 +43,7 @@ export class EndingMission extends Component {
   }
 
   handleResult() {
-    if (this.state.result > 0.1) {
+    if (this.state.result > 0.9) {
       let newCash = this.props.context.user.cash + this.state.theMission.reward;
       let newXp =
         this.props.context.user.experience + this.state.theMission.gained_xp;
@@ -86,9 +84,6 @@ export class EndingMission extends Component {
       apiHandler
         .updateAMission(this.state.theMission._id, this.state.theMission)
         .then((apiRes) => {
-          // console.log(apiRes);
-          // console.log("winner", this.state.theMission);
-          // console.log(this.props.history);
           const { handleMission } = this.props;
           handleMission(this.state.theMission);
         })
@@ -108,6 +103,8 @@ export class EndingMission extends Component {
         .updateAMission(this.state.theMission._id, this.state.theMission)
         .then((apiRes) => {
           console.log(apiRes);
+          const { handleMission } = this.props;
+          handleMission(this.state.theMission);
         })
         .catch((err) => {
           console.log(err);
@@ -116,7 +113,7 @@ export class EndingMission extends Component {
   }
 
   successOrFailure() {
-    if (this.state.result > 0.1) {
+    if (this.state.result > 0.9) {
       return (
         <React.Fragment>
           <h1 className="succes">SUCCES</h1>
@@ -131,8 +128,6 @@ export class EndingMission extends Component {
   }
 
   render() {
-    console.log(this.props.history);
-    console.log(this.state);
     return (
       <React.Fragment>
         {this.state.timerOn && (
