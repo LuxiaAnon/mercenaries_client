@@ -71,11 +71,11 @@ export class OneTraining extends Component {
                   <strong>Skill learned: </strong>
                   {this.state.oneTraining.skill_learned}
                 </p>
+
                 <p>
-                  <strong>Recommended rank: </strong>
-                  {this.state.oneTraining.recommended_rank}
+                  <strong>Details: </strong>
+                  {this.state.oneTraining.details}
                 </p>
-                <p>{this.state.oneTraining.details}</p>
               </div>
             </div>
             {!this.state.oneTraining.trainees.includes(
